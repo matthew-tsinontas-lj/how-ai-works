@@ -4,6 +4,8 @@
   "number": "05",
   "title": "Temperature & randomness",
   "blurb": "Why the same question can get different answers.",
+  "level": "beginner",
+  "buildsOn": ["predict"],
   "status": "ready",
   "slides": [
     {

@@ -1,0 +1,113 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "prompting",
+  "number": "08",
+  "title": "Writing good prompts",
+  "blurb": "Simple ways to get more useful answers, first time.",
+  "level": "beginner",
+  "buildsOn": ["context", "persona"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "The model only knows what you tell it",
+      "body": [
+        "A model can’t see your situation, your audience or what you’re aiming for. Leave those out and it fills the gaps with something generic.",
+        "A few extra sentences of detail usually make a bigger difference than anything else."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Example prompts written for illustration.",
+        "items": [
+          { "label": "Vague prompt", "text": "Write an email about the hack day.", "accent": "orange" },
+          { "label": "Specific prompt", "text": "Write a short, friendly email inviting 12 engineers to a hack day on Friday. Mention that lunch is provided and ask them to reply by Wednesday.", "accent": "green" },
+          { "label": "What changed", "text": "Audience, tone, length and the key details are all spelled out.", "accent": "blue" }
+        ]
+      }
+    },
+    {
+      "title": "What a good prompt usually includes",
+      "body": [
+        "You don’t need all of these every time, but checking for them is a quick way to improve a prompt.",
+        "If you’d need to explain it to a new colleague, you probably need to explain it to the model."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "A useful checklist, not a strict formula.",
+        "items": [
+          { "heading": "Goal", "text": "What you want, and what it’s for." },
+          { "heading": "Context", "text": "Background, audience and any source material to use." },
+          { "heading": "Format", "text": "Length, structure and tone — bullets, a table, a two-line summary." },
+          { "heading": "Examples", "text": "One or two samples of what good looks like." }
+        ]
+      }
+    },
+    {
+      "title": "Show, don’t just tell",
+      "body": [
+        "Describing a style precisely is hard. Showing an example is easy, and the model is very good at following the pattern.",
+        "This works for tone, formatting, level of detail — almost anything you can demonstrate."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "One example is often enough for the model to pick up the pattern.",
+        "items": [
+          { "label": "Instruction", "text": "Rewrite each word in plain English, like the example.", "accent": "blue" },
+          { "label": "Example", "text": "“Utilise” → “Use”", "accent": "orange" },
+          { "label": "Your input", "text": "“Facilitate”", "accent": "orange" },
+          { "label": "Model reply", "text": "“Help”", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Treat it as a conversation",
+      "body": [
+        "The first answer is a draft. Tell the model what to change, the same way you’d give feedback to a person.",
+        "And if a long chat has wandered off course, a fresh start with a better prompt often beats more corrections."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Good habits for any AI chat tool.",
+        "items": [
+          { "heading": "Ask for specific changes", "text": "“Shorter — about 50 words” beats “make it better”." },
+          { "heading": "Let it ask you", "text": "“Ask me any questions you need before you start.”" },
+          { "heading": "Start fresh when stuck", "text": "A clean context window stops old mistakes carrying over." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Which prompt is most likely to get a useful answer?",
+      "options": [
+        "Write something about our product",
+        "Write a 100-word update for customers about our new search feature, in a friendly tone",
+        "Write",
+        "Be creative"
+      ],
+      "answer": 1,
+      "explanation": "It gives the goal, audience, length, topic and tone, so the model doesn’t have to guess."
+    },
+    {
+      "question": "Why does including an example in your prompt help?",
+      "options": [
+        "It makes the prompt longer, which always helps",
+        "It shows the exact style or format, which is easier to match than a description",
+        "Models ignore instructions without examples",
+        "It gives the model new training"
+      ],
+      "answer": 1,
+      "explanation": "Examples demonstrate what you want directly. The model is good at continuing patterns it can see."
+    },
+    {
+      "question": "The first answer is close, but too long. What’s the best next step?",
+      "options": [
+        "Give up and write it yourself",
+        "Ask the exact same question again",
+        "Ask it to shorten the answer, saying roughly how long",
+        "Raise the temperature"
+      ],
+      "answer": 2,
+      "explanation": "Specific feedback on the draft is usually the fastest route to the answer you want."
+    }
+  ]
+}

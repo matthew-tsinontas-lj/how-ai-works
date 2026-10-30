@@ -1,0 +1,110 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "bias",
+  "number": "10",
+  "title": "Bias and fairness",
+  "blurb": "How models pick up unfair patterns from the text they learn from.",
+  "level": "beginner",
+  "buildsOn": ["training"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Models learn from human writing — flaws included",
+      "body": [
+        "A model learns from text people have written, and that text reflects the world as it has been described — stereotypes and imbalances included.",
+        "The model has no way of telling which patterns are fair. It learns them all, and can repeat them."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "A simplified picture of how a bias gets from the data into an answer.",
+        "items": [
+          { "label": "Training text", "text": "Lots of writing pairs certain jobs with certain genders.", "accent": "blue" },
+          { "label": "The model learns", "text": "Those pairings become more likely predictions.", "accent": "orange" },
+          { "label": "In its answers", "text": "Stories and suggestions can quietly repeat the stereotype.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "What it can look like",
+      "body": [
+        "Bias is often subtle. Each answer can look reasonable on its own; the pattern only shows across many answers.",
+        "Developers work to reduce this, but it can’t be removed completely."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Example replies written for illustration.",
+        "question": "Write a short story about a doctor and a nurse.",
+        "cards": [
+          { "label": "A biased pattern", "text": "The doctor is always “he” and the nurse is always “she”.", "accent": "orange" },
+          { "label": "A better response", "text": "The characters vary from story to story, or the story doesn’t assume either.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Where else it shows up",
+      "body": [
+        "Bias isn’t only about stereotypes in stories. It can also affect how well a model works for different people."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Some common forms — not a complete list.",
+        "items": [
+          { "heading": "Uneven quality across languages", "text": "Languages with less training text often get weaker answers." },
+          { "heading": "Assumed “default” people", "text": "Assuming a user’s culture, gender or background when it wasn’t mentioned." },
+          { "heading": "Skewed judgements", "text": "Rating or ranking people differently based on irrelevant details." }
+        ]
+      }
+    },
+    {
+      "title": "What you can do",
+      "body": [
+        "You can’t fix the model, but you can notice bias and stop it reaching decisions that matter.",
+        "That matters most when AI output affects real people."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "The higher the stakes, the more these matter.",
+        "items": [
+          { "heading": "Notice the defaults", "text": "Who did the answer assume? Would it change if the details changed?" },
+          { "heading": "Ask for range", "text": "Prompt for different perspectives, or ask it to avoid assumptions." },
+          { "heading": "Keep people in charge", "text": "Decisions about people — hiring, care, access — need human review." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Where does bias in an AI model mainly come from?",
+      "options": [
+        "Patterns in the human-written text it learned from",
+        "The model forming its own opinions",
+        "Bugs in the chat app",
+        "The person asking the question"
+      ],
+      "answer": 0,
+      "explanation": "Models learn patterns from their training data, including unfair ones that appear in human writing."
+    },
+    {
+      "question": "A model gives better answers in English than in some other languages. What’s the likely reason?",
+      "options": [
+        "English is a simpler language",
+        "It was trained on far more English text",
+        "Other languages are blocked",
+        "The model prefers English speakers"
+      ],
+      "answer": 1,
+      "explanation": "Models tend to do best in the languages they saw most during training, and English usually dominates."
+    },
+    {
+      "question": "AI is used to help screen job applicants. What’s the most important safeguard?",
+      "options": [
+        "Use a higher temperature",
+        "Let the AI make the final decision to save time",
+        "Have people review decisions and check for unfair patterns",
+        "Only use it on Mondays"
+      ],
+      "answer": 2,
+      "explanation": "When AI output affects people, human review and checking outcomes across groups help catch bias before it does harm."
+    }
+  ]
+}

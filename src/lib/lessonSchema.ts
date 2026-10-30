@@ -108,15 +108,21 @@ const questionSchema = z
     path: ['answer'],
   });
 
+/** How much technical background a lesson assumes. */
+export const LEVELS = ['beginner', 'intermediate', 'technical'] as const;
+
+const lessonId = z
+  .string()
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'id must be lowercase letters, numbers and hyphens');
+
 const lessonBase = {
   $schema: z.string().optional(),
-  id: z
-    .string()
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'id must be lowercase letters, numbers and hyphens')
-    .describe('Used in the lesson URL, and as the key for saved progress.'),
+  id: lessonId.describe('Used in the lesson URL, and as the key for saved progress.'),
   number: z.string().min(1).describe('Shown on the card, e.g. "01". Lessons are sorted by this.'),
   title: text,
   blurb: text,
+  level: z.enum(LEVELS).default('beginner').describe('How much technical background the lesson assumes.'),
+  buildsOn: z.array(lessonId).default([]).describe('Ids of lessons worth doing first.'),
 };
 
 const readyLesson = z.object({
@@ -140,6 +146,7 @@ export type Question = z.output<typeof questionSchema>;
 export type Visual = z.output<typeof visualSchema>;
 export type VisualKind = Visual['kind'];
 export type VisualOf<K extends VisualKind> = Extract<Visual, { kind: K }>;
+export type Level = (typeof LEVELS)[number];
 export type Tint = (typeof TINTS)[number];
 export type Accent = (typeof ACCENTS)[number];
 

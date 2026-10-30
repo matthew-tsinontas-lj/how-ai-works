@@ -4,6 +4,8 @@
   "number": "04",
   "title": "Predicting the next word",
   "blurb": "How a model writes by guessing one token at a time.",
+  "level": "beginner",
+  "buildsOn": ["tokens"],
   "status": "ready",
   "slides": [
     {

@@ -7,7 +7,15 @@ import { routes } from './routes';
 // Every real lesson is ready, so add a draft to check how drafts behave.
 vi.mock('./lib/lessons', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./lib/lessons')>();
-  const draft: Lesson = { id: 'draft-demo', number: '99', title: 'A draft lesson', blurb: 'Soon.', status: 'draft' };
+  const draft: Lesson = {
+    id: 'draft-demo',
+    number: '99',
+    title: 'A draft lesson',
+    blurb: 'Soon.',
+    level: 'beginner',
+    buildsOn: [],
+    status: 'draft',
+  };
   return {
     ...actual,
     lessons: [...actual.lessons, draft],

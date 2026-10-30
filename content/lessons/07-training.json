@@ -1,0 +1,111 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "training",
+  "number": "07",
+  "title": "How models are trained",
+  "blurb": "Where a model’s knowledge comes from — and why it stops at a date.",
+  "level": "beginner",
+  "buildsOn": ["predict"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Step one: read an enormous amount of text",
+      "body": [
+        "A model starts out knowing nothing. It’s shown a huge amount of text — books, websites, code — and asked, over and over, to predict the next token.",
+        "Each time it guesses wrong, its internal numbers (called parameters) are nudged slightly so the right answer scores higher next time. Over time, those nudges add up to a model of how language works."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "One training step, repeated an enormous number of times.",
+        "items": [
+          { "label": "Training text", "text": "The cat sat on the ___", "accent": "blue" },
+          { "label": "Model guesses", "text": "“floor”", "accent": "orange" },
+          { "label": "Adjust", "text": "The real word was “mat”, so nudge the parameters to make “mat” more likely next time.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Step two: learning to be an assistant",
+      "body": [
+        "A model fresh from step one just continues text. Ask it a question and it might carry on with more questions, as if it were writing a quiz.",
+        "So it gets further training on example conversations and on people’s ratings of its answers. This teaches it to follow instructions, be helpful and decline harmful requests."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Example replies written for illustration.",
+        "question": "What is the capital of France?",
+        "cards": [
+          { "label": "Before assistant training", "text": "What is the capital of Germany? What is the capital of Spain?", "accent": "orange" },
+          { "label": "After assistant training", "text": "The capital of France is Paris.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Why it has a knowledge cut-off",
+      "body": [
+        "Training text is collected up to a certain date. Once training ends, what the model has learned is fixed — it doesn’t keep reading the news.",
+        "That’s why a model may not know about recent events, and why some apps add web search: it puts fresh information into the context window."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "The model’s knowledge and the app around it are different things.",
+        "items": [
+          { "heading": "Fixed after training", "text": "Nothing after the cut-off date is in the model itself." },
+          { "heading": "Doesn’t learn as you chat", "text": "Your conversation doesn’t change the model’s parameters." },
+          { "heading": "Fresh facts come via context", "text": "Search results or pasted documents can fill the gap for one request." }
+        ]
+      }
+    },
+    {
+      "title": "Patterns, not a database",
+      "body": [
+        "A model doesn’t keep a copy of everything it read. What it learned is spread across its parameters as patterns.",
+        "That makes it good at things it saw a lot of, and shakier on details it saw rarely."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "This is why the same model can be brilliant on one question and wrong on the next.",
+        "items": [
+          { "heading": "Strong on the common", "text": "Widely written-about topics, everyday language, popular code." },
+          { "heading": "Shaky on the rare", "text": "Niche facts, exact figures, small organisations, recent changes." },
+          { "heading": "No index to check", "text": "It can’t look up where it learned something, so it can’t easily tell what it doesn’t know." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "During its first stage of training, how does a model mostly learn?",
+      "options": [
+        "By predicting the next token across huge amounts of text and adjusting when it’s wrong",
+        "By having facts typed into a database by hand",
+        "By chatting with users",
+        "By memorising a dictionary"
+      ],
+      "answer": 0,
+      "explanation": "The first stage is next-token prediction at enormous scale, with the parameters nudged after each mistake."
+    },
+    {
+      "question": "Why might a model straight out of the first stage not answer questions well?",
+      "options": [
+        "It hasn’t read enough text yet",
+        "It was trained to continue text, not to follow instructions",
+        "It only understands code",
+        "It deliberately avoids questions"
+      ],
+      "answer": 1,
+      "explanation": "Following instructions and acting as an assistant come from the second stage of training."
+    },
+    {
+      "question": "A big news story broke last week. Why might a model not know about it?",
+      "options": [
+        "It’s choosing not to say",
+        "News is filtered out of all training",
+        "Its training text was collected before the story happened",
+        "Models can only learn about history"
+      ],
+      "answer": 2,
+      "explanation": "The model’s knowledge stops at its training cut-off. Only tools such as web search can add newer information to the context."
+    }
+  ]
+}

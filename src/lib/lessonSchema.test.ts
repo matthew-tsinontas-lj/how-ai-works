@@ -25,6 +25,16 @@ describe('lesson content', () => {
       'predict',
       'temperature',
       'hallucination',
+      'training',
+      'prompting',
+      'your-data',
+      'bias',
+      'embeddings',
+      'retrieval',
+      'tools-and-agents',
+      'attention',
+      'evaluation',
+      'choosing-an-approach',
     ]);
   });
 
@@ -41,6 +51,22 @@ describe('loadLessons', () => {
     const { lessons, errors } = loadLessons({ 'a/draft.json': draft, 'a/ready.json': ready });
     expect(errors).toEqual([]);
     expect(lessons[1]).toMatchObject({ slides: [{ visual: { initialText: '' } }] });
+    expect(lessons[0]).toMatchObject({ level: 'beginner', buildsOn: [] });
+  });
+
+  it('rejects an unknown level', () => {
+    expect(loadLessons({ 'bad.json': { ...draft, level: 'expert' } }).errors).toHaveLength(1);
+  });
+
+  it('reports buildsOn references to missing lessons, but keeps the lesson', () => {
+    const { lessons, errors } = loadLessons({
+      'draft.json': draft,
+      'ready.json': { ...ready, buildsOn: ['draft-one', 'nope', 'ready-one'] },
+    });
+    expect(lessons).toHaveLength(2);
+    expect(errors).toEqual([
+      { file: 'ready.json', message: 'buildsOn refers to unknown lessons: "nope", "ready-one"' },
+    ]);
   });
 
   it('sorts by lesson number, numerically', () => {

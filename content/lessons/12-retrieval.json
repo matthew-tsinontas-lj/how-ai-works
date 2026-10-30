@@ -1,0 +1,112 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "retrieval",
+  "number": "12",
+  "title": "Retrieval (RAG)",
+  "blurb": "How chatbots answer from your documents by looking things up first.",
+  "level": "intermediate",
+  "buildsOn": ["context", "hallucination", "embeddings"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Give the model the right pages to read",
+      "body": [
+        "A model doesn’t know your organisation’s documents, and its knowledge stops at a cut-off date.",
+        "Retrieval-augmented generation (RAG) fixes that by searching your documents first, then putting the most relevant passages into the context window alongside the question."
+      ],
+      "visual": {
+        "kind": "context-bar",
+        "caption": "The retrieved passages take up much of the window, so the answer can come from them.",
+        "inside": [
+          { "label": "Instructions", "size": 14, "fill": "blue" },
+          { "label": "Retrieved passages", "size": 44, "fill": "mint" },
+          { "label": "Question", "size": 16, "fill": "peach" },
+          { "label": "Room for reply", "size": 22, "fill": "empty" }
+        ]
+      }
+    },
+    {
+      "title": "How a RAG system answers",
+      "body": [
+        "It all happens in the moment a question arrives. The model itself isn’t changed.",
+        "The search step often uses embeddings, so it finds passages by meaning rather than exact words."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Search, then answer — every time a question comes in.",
+        "items": [
+          { "label": "1. Search", "text": "Find the passages most relevant to the question.", "accent": "blue" },
+          { "label": "2. Add to context", "text": "Put those passages into the prompt with the question.", "accent": "orange" },
+          { "label": "3. Answer", "text": "The model answers from the passages — ideally saying which ones it used.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Why it helps",
+      "body": [
+        "RAG is one of the most common ways organisations use AI with their own information."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Benefits depend on good documents and good search.",
+        "items": [
+          { "heading": "Up to date", "text": "Update the documents and answers change too — no retraining." },
+          { "heading": "Your own knowledge", "text": "Answers can draw on internal documents the model never saw." },
+          { "heading": "Checkable", "text": "Each answer can point to the passage it came from." },
+          { "heading": "Less guessing", "text": "Made-up answers become less likely, though not impossible." }
+        ]
+      }
+    },
+    {
+      "title": "Where it goes wrong",
+      "body": [
+        "A RAG system is only as good as its search. If the right passage isn’t found, the model can’t use it — and may answer anyway.",
+        "Most problems can be traced to one of these."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "When a RAG answer is wrong, check what was retrieved first.",
+        "items": [
+          { "heading": "Wrong passages found", "text": "The search misses the relevant text, or finds something similar but wrong." },
+          { "heading": "Chopped-up documents", "text": "Documents are split into chunks, and a key point can be cut in half." },
+          { "heading": "Passages misread", "text": "The model can still misunderstand the source or mix in outside knowledge." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What does a RAG system add before the model answers?",
+      "options": [
+        "Relevant passages found by searching a document collection",
+        "Extra training on the question",
+        "A higher temperature",
+        "A second model to check spelling"
+      ],
+      "answer": 0,
+      "explanation": "RAG retrieves relevant passages and adds them to the context, so the model can answer from them."
+    },
+    {
+      "question": "An internal policy changes. How does a RAG system pick up the new version?",
+      "options": [
+        "The model has to be retrained from scratch",
+        "Update the document in the collection it searches",
+        "It finds out automatically from the news",
+        "It can’t — RAG only works with fixed documents"
+      ],
+      "answer": 1,
+      "explanation": "Because answers come from the documents at question time, updating the documents is enough."
+    },
+    {
+      "question": "A RAG chatbot gives a wrong answer. What’s a common cause?",
+      "options": [
+        "The model is too large",
+        "The question was too polite",
+        "The search found the wrong passages, or missed the right one",
+        "RAG systems are never wrong"
+      ],
+      "answer": 2,
+      "explanation": "If the right information doesn’t reach the context, the model can’t use it — and may fill the gap with a guess."
+    }
+  ]
+}

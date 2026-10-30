@@ -22,8 +22,9 @@ Add a JSON file to `content/lessons/`. No code changes are needed: the app picks
 
 1. Copy an existing lesson, e.g. `01-tokens.json`, and give it a new `id` (used in the URL and for saved progress) and `number` (sets the order on the home page).
 2. Keep the `"$schema": "../lesson.schema.json"` line. Your editor will then autocomplete fields and flag mistakes.
-3. Use `"status": "draft"` (with no slides or quiz) to show a "Coming soon" card.
-4. Run `npm test`. It fails if any lesson file is invalid. In the dev server, invalid files are listed at the top of the home page.
+3. Set `level` to `beginner`, `intermediate` or `technical` (shown on the card as "Beginner", "Some background" or "Technical"; defaults to `beginner`). List lesson ids worth doing first in `buildsOn`. The card shows them as "Builds on: …".
+4. Use `"status": "draft"` (with no slides or quiz) to show a "Coming soon" card.
+5. Run `npm test`. It fails if any lesson file is invalid. In the dev server, problems (including `buildsOn` ids that don't exist) are listed at the top of the home page.
 
 Each slide has a `title`, a `body` (one string per paragraph) and a `visual`. Every visual has a `caption`, plus fields for its `kind`:
 

@@ -16,13 +16,13 @@ export function HomeScreen() {
         Learn how AI actually works
       </h1>
       <p className={s.intro}>
-        Each lesson is a handful of slides followed by a quick quiz. Pick one to start — they work in any
-        order.
+        Each lesson is a handful of slides followed by a quick quiz. Each one shows how much technical
+        background it assumes, and which lessons it builds on.
       </p>
 
       {import.meta.env.DEV && lessonErrors.length > 0 && (
         <div role="alert" className={s.errors}>
-          <strong>Some lesson files were skipped (only shown in development):</strong>
+          <strong>Some lesson files have problems (only shown in development):</strong>
           {lessonErrors.map(({ file, message }) => (
             <pre key={file}>
               {file}

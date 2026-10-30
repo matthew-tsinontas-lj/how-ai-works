@@ -4,6 +4,7 @@
   "number": "02",
   "title": "The context window",
   "blurb": "What a model can “see” at once — and why it seems to forget.",
+  "level": "beginner",
   "status": "ready",
   "slides": [
     {

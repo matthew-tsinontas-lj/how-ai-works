@@ -1,0 +1,111 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "attention",
+  "number": "14",
+  "title": "Inside the transformer: attention",
+  "blurb": "How each token works out which other tokens matter to it.",
+  "level": "technical",
+  "buildsOn": ["tokens", "predict", "embeddings"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "From tokens to a prediction",
+      "body": [
+        "Most of today’s language models are transformers. Inside, each token is turned into a vector — a list of numbers — that then gets refined layer by layer.",
+        "Each layer updates every token’s vector using information from the others. The step that lets tokens share information is called attention."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Simplified view of a text-generation transformer.",
+        "items": [
+          { "label": "Embed", "text": "Each token becomes a vector, plus information about its position.", "accent": "blue" },
+          { "label": "Transform, many layers deep", "text": "Each layer updates every token’s vector using the others. Attention is the key step.", "accent": "orange" },
+          { "label": "Predict", "text": "The final vector at the last position becomes a score for every token in the vocabulary.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Attention: deciding which tokens matter",
+      "body": [
+        "Take “The animal didn’t cross the street because it was too tired.” To make sense of “it”, the model needs to connect it to “animal”.",
+        "Attention lets each token give a weight to every earlier token, then mix in information from them in proportion to those weights."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Illustrative only. Real models have many attention “heads” per layer, each learning different patterns, and the weights are rarely this tidy.",
+        "items": [
+          { "heading": "“animal” · strong", "text": "The most likely thing “it” refers to." },
+          { "heading": "“tired” · medium", "text": "A clue: streets don’t get tired." },
+          { "heading": "“street” · weak", "text": "Possible, but a poor fit with “tired”." }
+        ]
+      }
+    },
+    {
+      "title": "Queries, keys and values",
+      "body": [
+        "Each token’s vector is turned into three new vectors. A token’s query is compared with every earlier token’s key; better matches get higher scores.",
+        "The scores are normalised into weights that add up to 1, and the token’s new vector is the weighted mix of the values. In text generation, a token can only attend to tokens before it."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Each vector is produced by multiplying the token’s vector by a matrix learned in training.",
+        "items": [
+          { "label": "Query", "text": "What this token is looking for.", "accent": "blue" },
+          { "label": "Key", "text": "What each token offers, to be matched against queries.", "accent": "orange" },
+          { "label": "Value", "text": "The information a token passes on when it gets attention.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Why this design won — and its cost",
+      "body": [
+        "Transformers replaced earlier designs that read text one token at a time. Attention connects any two tokens directly, and training can process every position at once.",
+        "The trade-off is cost: standard attention compares every token with every other one."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Many variants of attention exist to reduce the cost of long contexts.",
+        "items": [
+          { "heading": "Parallel training", "text": "All positions in a training example are processed together, which suits modern hardware." },
+          { "heading": "Long-range links", "text": "A token can draw on any earlier token directly, however far back." },
+          { "heading": "Cost grows fast", "text": "Doubling the context roughly quadruples the attention work — one reason windows have limits." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What does attention let each token do?",
+      "options": [
+        "Weigh and mix in information from other tokens, based on relevance",
+        "Look up its meaning in a dictionary",
+        "Skip the rest of the model",
+        "Choose the temperature"
+      ],
+      "answer": 0,
+      "explanation": "Attention computes a weight for each earlier token and combines their information accordingly."
+    },
+    {
+      "question": "In the query, key and value view, how are attention weights worked out?",
+      "options": [
+        "By comparing values with other values",
+        "At random",
+        "By comparing one token’s query with other tokens’ keys",
+        "By position only — nearer tokens always win"
+      ],
+      "answer": 2,
+      "explanation": "Query–key matches set the weights; the values are what gets mixed together using those weights."
+    },
+    {
+      "question": "Why does standard attention get expensive with long contexts?",
+      "options": [
+        "Long texts use bigger tokens",
+        "Every token is compared with every other, so the work grows roughly with the square of the length",
+        "The model has to be retrained for each document",
+        "Attention only works on short text"
+      ],
+      "answer": 1,
+      "explanation": "Comparing all pairs means doubling the length roughly quadruples the work."
+    }
+  ]
+}

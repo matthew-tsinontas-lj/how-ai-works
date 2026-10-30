@@ -1,0 +1,110 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "your-data",
+  "number": "09",
+  "title": "AI and your data",
+  "blurb": "What happens to what you type, and what to keep out of AI tools.",
+  "level": "beginner",
+  "buildsOn": [],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "What you type goes somewhere",
+      "body": [
+        "With most AI tools, your messages and any files you add are sent to the provider’s servers, where the model runs.",
+        "What happens next depends on the tool and its settings. Your data might be stored, reviewed, or used to train future models."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "A general picture — every tool’s terms are different.",
+        "items": [
+          { "label": "On your device", "text": "You type a message or paste in a document.", "accent": "blue" },
+          { "label": "Provider’s servers", "text": "The model processes it and writes a reply.", "accent": "orange" },
+          { "label": "Depending on the tool", "text": "It may be stored, logged, reviewed or used for future training.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Think before you paste",
+      "body": [
+        "Once something has been sent, you can’t take it back. Some kinds of information shouldn’t go into an AI tool unless it’s been approved for that use.",
+        "If you’re not sure, assume it doesn’t belong there."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Your organisation’s AI policy is the final word on what’s allowed.",
+        "items": [
+          { "heading": "Personal information", "text": "Names, contact details and health information about real people." },
+          { "heading": "Secrets", "text": "Passwords, API keys and access tokens." },
+          { "heading": "Confidential material", "text": "Client or business information you’re not allowed to share." }
+        ]
+      }
+    },
+    {
+      "title": "Not all AI tools are the same",
+      "body": [
+        "The same model can come with very different terms. Personal or free accounts may handle data differently from tools your organisation has approved.",
+        "Approved tools have usually been checked for how data is stored, who can see it and whether it’s used for training."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Always check the specific tool’s terms and your organisation’s policy.",
+        "question": "Where should work information go?",
+        "cards": [
+          { "label": "Personal or free account", "text": "The terms may allow your chats to be stored or used to train future models.", "accent": "orange" },
+          { "label": "Approved work tool", "text": "Your organisation has checked how data is handled, stored and protected.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Habits that keep data safe",
+      "body": [
+        "Most of the benefit of AI doesn’t need sensitive data at all. A little care keeps it that way."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Good habits for any AI tool.",
+        "items": [
+          { "heading": "Use approved tools for work", "text": "Even if a personal tool is quicker to open." },
+          { "heading": "Remove identifying details", "text": "Swap real names and details for placeholders like “Person A”." },
+          { "heading": "Ask before you paste", "text": "If you’re unsure whether something is allowed, check first." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "When you send a message to an online AI chatbot, where does it usually go?",
+      "options": [
+        "It stays on your device",
+        "To the provider’s servers, where the model runs",
+        "Nowhere — it’s deleted as soon as you send it",
+        "Only to your organisation’s IT team"
+      ],
+      "answer": 1,
+      "explanation": "Most AI tools send your input to the provider’s servers. What happens after that depends on the tool’s terms and settings."
+    },
+    {
+      "question": "Which of these is safest to paste into an AI tool that hasn’t been approved for work?",
+      "options": [
+        "A colleague’s medical details",
+        "An API key",
+        "A public news article",
+        "A client contract"
+      ],
+      "answer": 2,
+      "explanation": "Public information carries little risk. Personal data, secrets and confidential documents should only go into tools approved for them."
+    },
+    {
+      "question": "You need AI help with a document that contains personal details. What’s a good approach?",
+      "options": [
+        "Paste it into whichever tool is quickest",
+        "Use an approved tool, and remove or replace identifying details where you can",
+        "Email it to yourself first",
+        "Split it across several chats so no single chat has everything"
+      ],
+      "answer": 1,
+      "explanation": "Approved tools and removing identifying details both reduce the risk. When in doubt, check your organisation’s policy."
+    }
+  ]
+}

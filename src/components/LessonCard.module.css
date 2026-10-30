@@ -83,3 +83,15 @@ a.card:hover {
   font-weight: 600;
   color: var(--accent);
 }
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.buildsOn {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}

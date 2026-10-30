@@ -1,0 +1,112 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "choosing-an-approach",
+  "number": "16",
+  "title": "Prompting, RAG or fine-tuning?",
+  "blurb": "Choosing the right way to adapt a model to your problem.",
+  "level": "technical",
+  "buildsOn": ["prompting", "retrieval", "training"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Three ways to adapt a model",
+      "body": [
+        "When a model doesn’t do what you need out of the box, there are three main levers.",
+        "They solve different problems, and they differ a lot in cost and effort."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Roughly in order of effort, from least to most.",
+        "items": [
+          { "label": "Prompting", "text": "Change the instructions and examples you send. Fast, cheap and easy to change.", "accent": "blue" },
+          { "label": "Retrieval (RAG)", "text": "Find relevant documents and add them to the context when each question arrives.", "accent": "orange" },
+          { "label": "Fine-tuning", "text": "Train the model further on your own examples, changing its parameters.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Match the method to the problem",
+      "body": [
+        "The key question is whether the model is missing knowledge or missing a behaviour.",
+        "Knowledge is usually best added through the context. Behaviour can often be shaped with prompts, and sometimes needs fine-tuning."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Common guidance — real projects often combine approaches.",
+        "items": [
+          { "heading": "Missing knowledge → retrieval", "text": "Facts, documents and anything that changes over time." },
+          { "heading": "Missing behaviour → prompt first", "text": "A style, format or narrow task. Fine-tune if prompting can’t get there." },
+          { "heading": "Both → combine", "text": "For example, a fine-tuned model that answers from retrieved documents." }
+        ]
+      }
+    },
+    {
+      "title": "Fine-tuning isn’t a knowledge upload",
+      "body": [
+        "A common mistake is fine-tuning on documents to teach a model facts. It tends to work poorly: the model can still make things up, and the knowledge is hard to update or trace back to a source.",
+        "Fine-tuning is better at teaching how to respond than what to know. It also costs more: preparing data, training, testing, and repeating it when you change base models."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Illustrative comparison for a typical document Q&A project.",
+        "question": "We want a bot that answers questions about our staff handbook.",
+        "cards": [
+          { "label": "Fine-tune on the handbook", "text": "Hard to update, can’t show its sources, and may still make things up.", "accent": "orange" },
+          { "label": "Retrieve from the handbook", "text": "Update the documents any time, and show which passage each answer used.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Start simple, and measure",
+      "body": [
+        "Each step up adds cost and complexity, so only take it when the simpler step has clearly fallen short.",
+        "Evaluation is what tells you whether it has."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "A sensible default order for most projects.",
+        "items": [
+          { "heading": "1. Prompt well", "text": "Clear instructions and good examples solve more than you’d expect." },
+          { "heading": "2. Add retrieval", "text": "When answers need knowledge the model doesn’t have." },
+          { "heading": "3. Consider fine-tuning", "text": "When behaviour still falls short and you have plenty of good examples." },
+          { "heading": "Measure each step", "text": "Use an evaluation set to show each change actually helps." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "An assistant must answer from policy documents that change every month. Which approach fits best?",
+      "options": [
+        "Retrieval (RAG)",
+        "Fine-tuning every month",
+        "Raising the temperature",
+        "A longer persona"
+      ],
+      "answer": 0,
+      "explanation": "Changing knowledge belongs in the context. Update the documents and the answers follow."
+    },
+    {
+      "question": "When is fine-tuning most likely to be worth it?",
+      "options": [
+        "When you want the model to learn a set of facts",
+        "When the model needs to know about yesterday’s news",
+        "When you need a consistent behaviour or format that prompting can’t achieve, and have many good examples",
+        "Always — it’s the first thing to try"
+      ],
+      "answer": 2,
+      "explanation": "Fine-tuning shapes how a model responds. It’s worth the cost when prompting has clearly fallen short."
+    },
+    {
+      "question": "What’s usually the best first step?",
+      "options": [
+        "Fine-tune a model",
+        "Improve the prompt",
+        "Build a vector database",
+        "Train a model from scratch"
+      ],
+      "answer": 1,
+      "explanation": "Prompting is the cheapest and fastest lever, and often enough on its own."
+    }
+  ]
+}

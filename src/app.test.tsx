@@ -15,15 +15,17 @@ function renderAt(path: string) {
 }
 
 const heading = () => screen.getByRole('heading', { level: 1 });
+// Card links include other lessons' titles ("Builds on: …"), so find a card by its own heading.
+const card = (title: string) => screen.getByRole('heading', { name: title }).closest('a')!;
 
 describe('home', () => {
   it('lists every lesson with its status and focuses the heading', async () => {
     const { container } = renderAt('/');
     expect(heading()).toHaveTextContent('Learn how AI actually works');
     expect(heading()).toHaveFocus();
-    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(6);
-    expect(screen.getAllByText('Not started')).toHaveLength(6);
-    expect(screen.getByText('0 of 6 lessons complete')).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(16);
+    expect(screen.getAllByText('Not started')).toHaveLength(16);
+    expect(screen.getByText('0 of 16 lessons complete')).toBeInTheDocument();
     expect(await axe(container)).toHaveProperty('violations', []);
   });
 
@@ -31,13 +33,25 @@ describe('home', () => {
     recordResult('tokens', 2, 3);
     renderAt('/');
     expect(screen.getByText('Completed · 2/3')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Tokenisation.*Revisit/ })).toBeInTheDocument();
-    expect(screen.getByText('1 of 6 lessons complete')).toBeInTheDocument();
+    expect(card('Tokenisation')).toHaveTextContent('Revisit');
+    expect(screen.getByText('1 of 16 lessons complete')).toBeInTheDocument();
+  });
+
+  it('shows each lesson’s level and what it builds on', () => {
+    renderAt('/');
+    const retrieval = card('Retrieval (RAG)');
+    expect(retrieval).toHaveTextContent('Level: Some background');
+    expect(retrieval).toHaveTextContent(
+      'Builds on: The context window, Why AI gets things wrong, Embeddings: meaning as numbers',
+    );
+    expect(screen.getAllByText('Beginner')).toHaveLength(10);
+    expect(screen.getAllByText('Some background')).toHaveLength(3);
+    expect(screen.getAllByText('Technical')).toHaveLength(3);
   });
 
   it('opens a lesson from its card', async () => {
     const { user, location } = renderAt('/');
-    await user.click(screen.getByRole('link', { name: /The context window/ }));
+    await user.click(card('The context window'));
     expect(location()).toBe('/lessons/context/1');
   });
 });
@@ -128,7 +142,7 @@ describe('quiz', () => {
     expect(heading()).toHaveTextContent('2 / 3 correct');
     expect(screen.getByText('Tokenisation · complete')).toBeInTheDocument();
     expect(screen.getByText(/Nearly there/)).toBeInTheDocument();
-    expect(screen.getByText('1 of 6 lessons complete')).toBeInTheDocument();
+    expect(screen.getByText('1 of 16 lessons complete')).toBeInTheDocument();
     expect(getProgress().tokens).toMatchObject({ bestScore: 2, total: 3 });
     expect(await axe(container)).toHaveProperty('violations', []);
   });

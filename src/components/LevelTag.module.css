@@ -1,0 +1,37 @@
+.level {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.bar {
+  width: 4px;
+  border-radius: 1px;
+  background: var(--border-strong);
+}
+
+.bar:nth-child(1) {
+  height: 6px;
+}
+
+.bar:nth-child(2) {
+  height: 9px;
+}
+
+.bar:nth-child(3) {
+  height: 12px;
+}
+
+.on {
+  background: var(--accent);
+}

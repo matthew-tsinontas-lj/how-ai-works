@@ -1,0 +1,112 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "embeddings",
+  "number": "11",
+  "title": "Embeddings: meaning as numbers",
+  "blurb": "How text becomes numbers that capture what it means.",
+  "level": "intermediate",
+  "buildsOn": ["tokens"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Turning meaning into numbers",
+      "body": [
+        "An embedding is a list of numbers that represents a piece of text — a word, a sentence or a whole document.",
+        "It’s produced by a model trained so that texts with similar meanings get similar numbers. The individual numbers don’t mean much on their own; the pattern does."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Numbers made up for illustration. Real embeddings have hundreds or thousands of numbers each.",
+        "items": [
+          { "heading": "“puppy”", "text": "[0.82, 0.11, −0.40, …]" },
+          { "heading": "“dog”", "text": "[0.79, 0.15, −0.37, …]" },
+          { "heading": "“invoice”", "text": "[−0.21, 0.66, 0.53, …]" }
+        ]
+      }
+    },
+    {
+      "title": "Close together means similar",
+      "body": [
+        "Think of each embedding as a point on a map with many dimensions. Texts with similar meanings land near each other.",
+        "That works even when they share no words at all — it’s the meaning that matters, not the spelling."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Closeness is measured mathematically, by comparing the two lists of numbers.",
+        "question": "Which is closest to “How do I reset my password?”",
+        "cards": [
+          { "label": "Close", "text": "“I forgot my login details.”", "accent": "green" },
+          { "label": "Far", "text": "“What’s the weather tomorrow?”", "accent": "orange" }
+        ]
+      }
+    },
+    {
+      "title": "Search by meaning, not keywords",
+      "body": [
+        "Keyword search finds documents that contain your words. Semantic search finds documents that mean what you meant.",
+        "It works by comparing embeddings."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Documents are embedded once. Each question only needs one new embedding.",
+        "items": [
+          { "label": "1. Embed your documents", "text": "Each document, or chunk of one, becomes a list of numbers, stored in a database.", "accent": "blue" },
+          { "label": "2. Embed the question", "text": "The search query becomes a list of numbers too.", "accent": "orange" },
+          { "label": "3. Find the nearest", "text": "Return the documents whose embeddings are closest to the question’s.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Where embeddings are used",
+      "body": [
+        "Embeddings are a building block behind many AI features — often ones you don’t notice.",
+        "The next lesson looks at the most important one for chatbots."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "All of these rely on “close together means similar”.",
+        "items": [
+          { "heading": "Semantic search", "text": "Finding help articles that answer the question, whatever words were used." },
+          { "heading": "Recommendations", "text": "“More like this” for articles, products or support tickets." },
+          { "heading": "Grouping and duplicates", "text": "Clustering feedback by theme, or spotting near-identical records." },
+          { "heading": "Retrieval for chatbots", "text": "Finding the right documents to give a model before it answers." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What is an embedding?",
+      "options": [
+        "A list of numbers that represents the meaning of a piece of text",
+        "A picture inserted into a document",
+        "A password for a model",
+        "The model’s reply to a question"
+      ],
+      "answer": 0,
+      "explanation": "Embeddings turn text into numbers arranged so that similar meanings end up close together."
+    },
+    {
+      "question": "Why can semantic search match “I forgot my login” with “How do I reset my password?”",
+      "options": [
+        "They share the same keywords",
+        "Their embeddings are close because their meanings are similar",
+        "Someone linked them by hand",
+        "They were written by the same person"
+      ],
+      "answer": 1,
+      "explanation": "The two share almost no words, but their meanings are close — and embeddings capture meaning."
+    },
+    {
+      "question": "Which task suits embeddings best?",
+      "options": [
+        "Doing exact arithmetic",
+        "Storing passwords securely",
+        "Finding support articles similar to a customer’s question",
+        "Generating images"
+      ],
+      "answer": 2,
+      "explanation": "Embeddings are designed for comparing meaning, so “find things like this” tasks are their strength."
+    }
+  ]
+}

@@ -4,6 +4,7 @@
   "number": "01",
   "title": "Tokenisation",
   "blurb": "How text gets chopped into pieces before a model can read it.",
+  "level": "beginner",
   "status": "ready",
   "slides": [
     {

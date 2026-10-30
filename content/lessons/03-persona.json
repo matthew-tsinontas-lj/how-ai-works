@@ -4,6 +4,8 @@
   "number": "03",
   "title": "Personas & system prompts",
   "blurb": "How instructions shape a model’s voice, focus and boundaries.",
+  "level": "beginner",
+  "buildsOn": ["context"],
   "status": "ready",
   "slides": [
     {

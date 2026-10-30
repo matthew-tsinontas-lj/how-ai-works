@@ -4,6 +4,8 @@
   "number": "06",
   "title": "Why AI gets things wrong",
   "blurb": "How a model can sound confident and still be mistaken.",
+  "level": "beginner",
+  "buildsOn": ["predict"],
   "status": "ready",
   "slides": [
     {

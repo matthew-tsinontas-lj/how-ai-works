@@ -11,6 +11,7 @@ export function loadLessons(modules: Record<string, unknown>) {
   const lessons: Lesson[] = [];
   const errors: LessonLoadError[] = [];
   const ids = new Set<string>();
+  const files = new Map<string, string>();
 
   for (const [path, data] of Object.entries(modules)) {
     const file = path.split('/').pop() ?? path;
@@ -24,7 +25,19 @@ export function loadLessons(modules: Record<string, unknown>) {
       continue;
     }
     ids.add(result.data.id);
+    files.set(result.data.id, file);
     lessons.push(result.data);
+  }
+
+  // A bad buildsOn reference is reported but doesn't hide the lesson; the card just leaves it out.
+  for (const lesson of lessons) {
+    const unknown = lesson.buildsOn.filter((id) => id === lesson.id || !ids.has(id));
+    if (unknown.length) {
+      errors.push({
+        file: files.get(lesson.id)!,
+        message: `buildsOn refers to unknown lessons: ${unknown.map((id) => `"${id}"`).join(', ')}`,
+      });
+    }
   }
 
   lessons.sort((a, b) => a.number.localeCompare(b.number, undefined, { numeric: true }));

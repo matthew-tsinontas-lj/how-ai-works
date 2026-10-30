@@ -1,0 +1,111 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "evaluation",
+  "number": "15",
+  "title": "Evaluating AI output",
+  "blurb": "How to tell whether a change actually made an AI feature better.",
+  "level": "technical",
+  "buildsOn": ["temperature", "hallucination"],
+  "status": "ready",
+  "slides": [
+    {
+      "title": "“It looked fine” isn’t a test",
+      "body": [
+        "AI output varies from run to run, and a change that fixes one case can quietly break another. Trying a few examples by hand misses both.",
+        "Evaluation means scoring the system on many examples, the same way every time, so you can compare versions."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Numbers made up for illustration.",
+        "question": "Is the new prompt better?",
+        "cards": [
+          { "label": "Spot check", "text": "Tried three questions — the answers looked good.", "accent": "orange" },
+          { "label": "Evaluation", "text": "Ran 200 saved questions: 182 correct, up from 171 — but 4 that used to pass now fail.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Start with a test set",
+      "body": [
+        "A test set is a saved collection of inputs, each with a way to judge the output.",
+        "It doesn’t need to be huge to be useful. It does need to reflect how the system is really used."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Keep adding to it — every bug found is a new test case.",
+        "items": [
+          { "heading": "Realistic examples", "text": "Inputs that look like what real users send." },
+          { "heading": "Hard cases too", "text": "Edge cases, past failures and requests it should refuse." },
+          { "heading": "A clear idea of “good”", "text": "An expected answer, or criteria a grader can apply." }
+        ]
+      }
+    },
+    {
+      "title": "Ways to score",
+      "body": [
+        "Different checks suit different outputs. Most real evaluations combine them.",
+        "Use the cheapest check that actually measures what you care about."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Fast checks for scale; people for the questions that need judgement.",
+        "items": [
+          { "heading": "Automatic checks", "text": "Code that checks for the right answer, valid format or required details. Fast and consistent." },
+          { "heading": "Human review", "text": "The best guide to nuanced quality, but slow and costly." },
+          { "heading": "Model as judge", "text": "Another model grades output against a rubric. Scales well, but has its own biases — check it against human ratings." }
+        ]
+      }
+    },
+    {
+      "title": "Make it a habit",
+      "body": [
+        "Run the evaluation every time something changes: the prompt, the model, the settings or the retrieved documents.",
+        "Because output varies, run each case a few times when results are close."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "Look at what got worse, not just the overall score.",
+        "items": [
+          { "label": "Change", "text": "A new prompt, model, setting or data source.", "accent": "blue" },
+          { "label": "Run the evaluation", "text": "Score it on the same test set as before.", "accent": "orange" },
+          { "label": "Compare", "text": "Keep the change only if it’s better overall — and check what regressed.", "accent": "green" }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Why isn’t trying a few examples by hand enough?",
+      "options": [
+        "Output varies, and rare failures or new breakages are easy to miss",
+        "Models can tell when they’re being tested by hand",
+        "Hand-testing is against the rules",
+        "It is enough, as long as the answers look good"
+      ],
+      "answer": 0,
+      "explanation": "A handful of examples can’t show how often a system fails, or what a change has broken."
+    },
+    {
+      "question": "What should a good test set include?",
+      "options": [
+        "Only the easiest questions, so scores look good",
+        "Realistic examples plus hard cases and past failures",
+        "Random text from the internet",
+        "Only questions the model has already answered correctly"
+      ],
+      "answer": 1,
+      "explanation": "Realistic cases show typical quality; hard cases and past failures catch regressions."
+    },
+    {
+      "question": "What’s the main caution when using a model as a judge?",
+      "options": [
+        "It’s too slow to be useful",
+        "It can only grade code",
+        "Its scores should be checked against human judgement, because it can be biased or wrong",
+        "It always gives full marks"
+      ],
+      "answer": 2,
+      "explanation": "A model judge is useful at scale, but it needs checking against people before you rely on it."
+    }
+  ]
+}

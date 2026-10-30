@@ -25,6 +25,25 @@
           "type": "string",
           "minLength": 1
         },
+        "level": {
+          "default": "beginner",
+          "description": "How much technical background the lesson assumes.",
+          "type": "string",
+          "enum": [
+            "beginner",
+            "intermediate",
+            "technical"
+          ]
+        },
+        "buildsOn": {
+          "default": [],
+          "description": "Ids of lessons worth doing first.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        },
         "status": {
           "type": "string",
           "const": "ready"
@@ -454,6 +473,25 @@
         "blurb": {
           "type": "string",
           "minLength": 1
+        },
+        "level": {
+          "default": "beginner",
+          "description": "How much technical background the lesson assumes.",
+          "type": "string",
+          "enum": [
+            "beginner",
+            "intermediate",
+            "technical"
+          ]
+        },
+        "buildsOn": {
+          "default": [],
+          "description": "Ids of lessons worth doing first.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
         },
         "status": {
           "type": "string",

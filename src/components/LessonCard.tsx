@@ -1,8 +1,20 @@
 import { Link } from 'react-router';
 import type { Lesson, ReadyLesson } from '../lib/lessonSchema';
+import { getLesson } from '../lib/lessons';
 import { paths } from '../lib/paths';
 import type { Progress } from '../lib/progress';
+import { LevelTag } from './LevelTag';
 import s from './LessonCard.module.css';
+
+function Details({ lesson }: { lesson: Lesson }) {
+  const prerequisites = lesson.buildsOn.flatMap((id) => getLesson(id)?.title ?? []);
+  return (
+    <div className={s.details}>
+      <LevelTag level={lesson.level} />
+      {prerequisites.length > 0 && <span className={s.buildsOn}>Builds on: {prerequisites.join(', ')}</span>}
+    </div>
+  );
+}
 
 interface LessonCardProps {
   lesson: ReadyLesson;
@@ -21,6 +33,7 @@ export function LessonCard({ lesson, result }: LessonCardProps) {
       </div>
       <h2 className={s.title}>{lesson.title}</h2>
       <p className={s.blurb}>{lesson.blurb}</p>
+      <Details lesson={lesson} />
       <div className={s.bottom}>
         <span>
           {lesson.slides.length} slides · {total} questions
@@ -42,6 +55,7 @@ export function DraftCard({ lesson }: { lesson: Lesson }) {
       </div>
       <h2 className={s.title}>{lesson.title}</h2>
       <p className={s.blurb}>{lesson.blurb}</p>
+      <Details lesson={lesson} />
     </div>
   );
 }
