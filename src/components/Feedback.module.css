@@ -1,0 +1,23 @@
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+}
+
+.right {
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.wrong {
+  background: var(--error-bg);
+  color: var(--error-fg);
+}
+
+.explanation {
+  line-height: 1.55;
+  color: var(--text);
+}

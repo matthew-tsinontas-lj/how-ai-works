@@ -1,0 +1,50 @@
+.home {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 48px var(--gutter) 64px;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+}
+
+.title {
+  max-width: 760px;
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.intro {
+  max-width: 640px;
+  margin: 0 0 40px;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.errors {
+  margin: 0 0 32px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: var(--error-bg);
+  color: var(--error-fg);
+}
+
+.errors pre {
+  margin: 8px 0 0;
+  font-size: 13px;
+  white-space: pre-wrap;
+}

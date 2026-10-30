@@ -1,0 +1,80 @@
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover:enabled {
+  border-color: var(--focus);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.marker {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: var(--neutral-bg);
+  color: var(--text-2);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.text {
+  flex: 1;
+}
+
+.mark {
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.correct {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+
+.correct .marker {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.correct .mark {
+  color: var(--success);
+}
+
+.wrong {
+  border-color: var(--error);
+  background: var(--error-bg);
+}
+
+.wrong .marker {
+  background: var(--error);
+  color: #ffffff;
+}
+
+.wrong .mark {
+  color: var(--error);
+}
+
+.dimmed {
+  opacity: 0.6;
+}

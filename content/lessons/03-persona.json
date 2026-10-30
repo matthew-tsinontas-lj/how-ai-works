@@ -1,0 +1,90 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "persona",
+  "number": "03",
+  "title": "Personas & system prompts",
+  "blurb": "How instructions shape a model’s voice, focus and boundaries.",
+  "status": "ready",
+  "slides": [
+    {
+      "title": "One model, many personas",
+      "body": [
+        "A persona is a set of instructions — often a hidden “system prompt” — placed at the start of the context.",
+        "It tells the model who to be, how to sound and what to focus on. The underlying model doesn’t change at all."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "The system prompt sits in the context window ahead of your message.",
+        "items": [
+          { "label": "System prompt", "text": "You are a friendly tutor for beginners. Keep answers short and use everyday examples.", "accent": "blue" },
+          { "label": "Your message", "text": "What is a token?", "accent": "orange" },
+          { "label": "Model reply", "text": "Think of tokens as puzzle pieces of text…", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Same question, different persona",
+      "body": [
+        "Both answers draw on the same underlying knowledge.",
+        "Tone, length and vocabulary change because the instructions changed — nothing else."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Example replies written for illustration.",
+        "question": "What is a token?",
+        "cards": [
+          { "label": "Persona: patient tutor", "text": "Think of tokens as puzzle pieces of text. The model reads the pieces, not whole words.", "accent": "blue" },
+          { "label": "Persona: technical reviewer", "text": "Tokens are sub-word units produced by the tokeniser and mapped to integer IDs in a fixed vocabulary.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "What a persona can and can’t do",
+      "body": ["Personas are powerful for shaping behaviour, but they’re instructions — not upgrades."],
+      "visual": {
+        "kind": "points",
+        "caption": "A persona steers the model; it doesn’t change what the model knows.",
+        "items": [
+          { "heading": "Can: set tone and format", "text": "Friendly or formal, bullets or prose, brief or detailed." },
+          { "heading": "Can: set focus and limits", "text": "Stay on one topic, or decline certain kinds of request." },
+          { "heading": "Can’t: add knowledge", "text": "Calling it an “expert” doesn’t give it facts it never learned." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Where does a persona usually come from?",
+      "options": [
+        "Instructions such as a system prompt at the start of the context",
+        "A separate model trained for each persona",
+        "The user’s profile picture",
+        "Random chance on each reply"
+      ],
+      "answer": 0,
+      "explanation": "Personas are mostly instructions placed in the context. The same model can play many roles."
+    },
+    {
+      "question": "Telling a model “You are a world-class lawyer” will…",
+      "options": [
+        "Give it legal knowledge it didn’t have",
+        "Change its tone and focus, but not what it actually knows",
+        "Make its advice legally binding",
+        "Have no effect whatsoever"
+      ],
+      "answer": 1,
+      "explanation": "A role can sharpen focus and style, but it can’t add facts the model never learned — so you still need to check its work."
+    },
+    {
+      "question": "Two apps use the same model but feel very different. Why?",
+      "options": [
+        "They give it different instructions and context",
+        "One copy of the model is secretly smarter",
+        "They use different alphabets",
+        "One of them is always online"
+      ],
+      "answer": 0,
+      "explanation": "Different system prompts, documents and settings in the context make the same model behave very differently."
+    }
+  ]
+}

@@ -1,0 +1,473 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Used in the lesson URL, and as the key for saved progress."
+        },
+        "number": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Shown on the card, e.g. \"01\". Lessons are sorted by this."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blurb": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "const": "ready"
+        },
+        "slides": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "body": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "One entry per paragraph."
+              },
+              "visual": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "tokens"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "tokens": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Token text. A leading space is shown as ·"
+                            },
+                            "tokenId": {
+                              "description": "Optional number shown under the token.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "text"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption",
+                      "tokens"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "try-it"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "initialText": {
+                        "default": "",
+                        "description": "Sentence pre-filled in the input.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "context-bar"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "inside": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "size": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "description": "Relative width of the segment."
+                            },
+                            "fill": {
+                              "type": "string",
+                              "enum": [
+                                "blue",
+                                "peach",
+                                "mint",
+                                "lilac",
+                                "empty"
+                              ],
+                              "description": "\"empty\" draws a dashed, unfilled segment."
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "size",
+                            "fill"
+                          ]
+                        }
+                      },
+                      "outside": {
+                        "default": [],
+                        "description": "Content that has fallen out of the window, drawn struck through.",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "label"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption",
+                      "inside"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "rows"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "rows": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "chips": {
+                              "minItems": 1,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "description": "Each distinct chip text gets its own colour."
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "chips"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption",
+                      "rows"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "stack"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "items": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "accent": {
+                              "type": "string",
+                              "enum": [
+                                "blue",
+                                "orange",
+                                "green"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "text",
+                            "accent"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption",
+                      "items"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "compare"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "question": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "cards": {
+                        "minItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "accent": {
+                              "type": "string",
+                              "enum": [
+                                "blue",
+                                "orange",
+                                "green"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "text",
+                            "accent"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption",
+                      "question",
+                      "cards"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "points"
+                      },
+                      "caption": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Small print shown under the visual."
+                      },
+                      "items": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "heading": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "heading",
+                            "text"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "caption",
+                      "items"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "title",
+              "body",
+              "visual"
+            ]
+          }
+        },
+        "quiz": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "minLength": 1
+              },
+              "options": {
+                "minItems": 2,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "answer": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991,
+                "description": "Zero-based index of the correct option."
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Shown after the learner answers, right or wrong."
+              }
+            },
+            "required": [
+              "question",
+              "options",
+              "answer",
+              "explanation"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "number",
+        "title",
+        "blurb",
+        "status",
+        "slides",
+        "quiz"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Used in the lesson URL, and as the key for saved progress."
+        },
+        "number": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Shown on the card, e.g. \"01\". Lessons are sorted by this."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blurb": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "const": "draft",
+          "description": "Shown as \"Coming soon\"; needs no slides or quiz."
+        }
+      },
+      "required": [
+        "id",
+        "number",
+        "title",
+        "blurb",
+        "status"
+      ]
+    }
+  ]
+}

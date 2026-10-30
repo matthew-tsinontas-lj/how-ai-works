@@ -1,0 +1,56 @@
+/* Design tokens, taken from the Main.dc.html prototype. */
+:root {
+  /* Swap --accent for one of the prototype's alternatives: #0F7B6C, #B4441E, #6B3FD4 */
+  --accent: #3346d3;
+  --accent-hover: #1f2e9e;
+  --focus: #8c98f0;
+
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --panel: #f0f2f9;
+  --draft-bg: #fafbfd;
+  --border: #e2e5ee;
+  --border-strong: #cdd1dc;
+  --border-dashed: #8a90a2;
+  --removed-bg: #e6e8ee;
+
+  --text: #161a26;
+  --text-2: #3f4556;
+  --muted: #5a6072;
+
+  --neutral-bg: #eef0f6;
+  --success: #1e7b4f;
+  --success-bg: #e3f4ea;
+  --success-fg: #1e6b45;
+  --error: #b42318;
+  --error-bg: #fde7e4;
+  --error-fg: #9b1c12;
+
+  --tint-blue: #dce3ff;
+  --tint-peach: #ffe0cc;
+  --tint-mint: #d3f0e2;
+  --tint-lilac: #f1dcf6;
+
+  --accent-blue: #8c98f0;
+  --accent-orange: #f0a46e;
+  --accent-green: #6cc59b;
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: Inter, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 99px;
+
+  --page-width: 1120px;
+  --gutter: 24px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: 16px;
+  }
+}

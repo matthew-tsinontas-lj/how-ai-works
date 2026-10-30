@@ -1,0 +1,110 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "hallucination",
+  "number": "06",
+  "title": "Why AI gets things wrong",
+  "blurb": "How a model can sound confident and still be mistaken.",
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Confident isn’t the same as correct",
+      "body": [
+        "Sometimes a model states something false as if it were fact. This is often called a “hallucination”.",
+        "A model writes what is likely to come next, so a wrong answer can be just as fluent and confident as a right one. The tone tells you nothing about accuracy."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Illustrative example. Invented references are a well-known failure mode.",
+        "question": "Can you give me a source for that?",
+        "cards": [
+          { "label": "What you might see", "text": "A tidy reference with authors, a title, a journal and a year.", "accent": "blue" },
+          { "label": "What may be true", "text": "The paper doesn’t exist — it was pieced together from the patterns of real references.", "accent": "orange" }
+        ]
+      }
+    },
+    {
+      "title": "Why it happens",
+      "body": [
+        "Nothing in the prediction step checks facts. When the model’s training gives it a clear answer, it usually gets things right.",
+        "When it doesn’t, it still produces an answer-shaped reply, because that’s what usually comes next."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Common causes — often several at once.",
+        "items": [
+          { "heading": "Gaps in training", "text": "Rare topics, niche details and specific numbers were seen too little to learn reliably." },
+          { "heading": "Out-of-date knowledge", "text": "Training stops at a cut-off date, so recent events may be missing or wrong." },
+          { "heading": "Pressure to answer", "text": "Saying “I’m not sure” is less common in text than giving an answer, so models tend to answer." }
+        ]
+      }
+    },
+    {
+      "title": "Giving it the source helps — but doesn’t guarantee",
+      "body": [
+        "Putting the facts in the context window — a pasted document, say — gives the model something to draw on instead of guessing.",
+        "It can still misread the source or mix in things from elsewhere, so the answer still needs checking. It’s just much easier to check."
+      ],
+      "visual": {
+        "kind": "context-bar",
+        "caption": "When the answer can come from the pasted source, there’s less room for guessing.",
+        "inside": [
+          { "label": "Instructions", "size": 14, "fill": "blue" },
+          { "label": "Pasted source", "size": 40, "fill": "mint" },
+          { "label": "Your question", "size": 18, "fill": "peach" },
+          { "label": "Room for reply", "size": 22, "fill": "empty" }
+        ]
+      }
+    },
+    {
+      "title": "How to check its work",
+      "body": [
+        "AI can save a lot of time, but you’re still responsible for what you do with its answers.",
+        "The more an answer matters, the more it’s worth checking."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Good habits for any AI tool.",
+        "items": [
+          { "heading": "Open the sources", "text": "If it cites something, check the source exists and says what it claims." },
+          { "heading": "Verify the specifics", "text": "Names, numbers, dates and quotes are where errors hide." },
+          { "heading": "Treat it as a draft", "text": "Use the answer as a starting point, not a final decision." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What does “hallucination” mean for an AI model?",
+      "options": [
+        "The model crashes and stops responding",
+        "The model states something false or made up as if it were fact",
+        "The model refuses to answer",
+        "The model describes an image"
+      ],
+      "answer": 1,
+      "explanation": "A hallucination is confident-sounding output that isn’t true, such as a made-up fact or reference."
+    },
+    {
+      "question": "Why might a model invent a reference that doesn’t exist?",
+      "options": [
+        "It writes text shaped like a reference without checking that one exists",
+        "It is trying to trick you",
+        "The reference was deleted from the internet",
+        "References are always made up"
+      ],
+      "answer": 0,
+      "explanation": "The model has learned what references look like, so it can produce a convincing one — but nothing checks that it’s real."
+    },
+    {
+      "question": "You’re using an AI answer for something important. What’s the best approach?",
+      "options": [
+        "Trust it if it sounds confident",
+        "Ask the same question again until the answers match",
+        "Check the key facts against reliable sources",
+        "Lower the temperature so it can’t be wrong"
+      ],
+      "answer": 2,
+      "explanation": "Confidence and consistency aren’t evidence. Checking key facts against reliable sources is what catches errors."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--border-strong);
+  transition: width 0.15s ease;
+}
+
+.seen {
+  background: var(--accent);
+}
+
+.current {
+  width: 22px;
+}

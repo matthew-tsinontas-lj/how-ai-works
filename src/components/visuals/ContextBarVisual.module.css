@@ -1,0 +1,98 @@
+.bar {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.segment {
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  color: var(--text);
+}
+
+.outside {
+  display: flex;
+  flex: 0 0 22%;
+  margin-top: 24px;
+}
+
+.dropped {
+  flex: 1;
+  background: var(--removed-bg);
+  border: 1.5px dashed var(--border-dashed);
+  color: var(--text-2);
+  text-decoration: line-through;
+}
+
+.window {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.windowLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.segments {
+  display: flex;
+  gap: 6px;
+  min-height: 120px;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--accent);
+  background: var(--surface);
+}
+
+.segments .segment {
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+.empty {
+  background: var(--surface);
+  border: 1.5px dashed var(--border-dashed);
+  color: var(--text-2);
+}
+
+/* Too narrow for side-by-side segments: stack them instead. */
+@media (max-width: 480px) {
+  .bar,
+  .segments {
+    flex-direction: column;
+  }
+
+  .outside {
+    flex-basis: auto;
+    margin-top: 0;
+  }
+
+  .segments {
+    min-height: 0;
+  }
+
+  .segments .segment {
+    flex: none !important;
+    min-height: 40px;
+  }
+}

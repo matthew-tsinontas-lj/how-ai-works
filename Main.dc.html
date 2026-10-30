@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>How AI Works</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F6FA}
+a{color:#3346D3}a:hover{color:#1F2E9E}
+.lesson-card{transition:transform .15s ease, box-shadow .15s ease}
+.lesson-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(22,26,38,.08)}
+.lesson-card:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #8C98F0;outline-offset:2px}
+.opt:hover:enabled{border-color:#8C98F0 !important}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F5F6FA; font-family: Inter, system-ui, sans-serif; color: #161A26; box-sizing: border-box">
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #E2E5EE">
+<div style="max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<button onClick="{{goHome}}" style="display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: #161A26; min-height: 44px">
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="{{accent}}"></rect><rect x="7" y="10" width="7" height="12" rx="2" fill="#FFFFFF"></rect><rect x="16" y="10" width="9" height="5" rx="2" fill="#FFFFFF" opacity=".75"></rect><rect x="16" y="17" width="5" height="5" rx="2" fill="#FFFFFF" opacity=".55"></rect></svg>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.01em">How AI Works</span>
+</button>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: #5A6072">
+<span>{{completedCount}} of {{readyCount}} lessons complete</span>
+<div style="width: 120px; height: 8px; border-radius: 99px; background: #E2E5EE; overflow: hidden"><div style="{{progressFill}}"></div></div>
+</div>
+</div>
+</header>
+
+<sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+<main style="max-width: 1120px; margin: 0 auto; padding: 48px 24px 64px; box-sizing: border-box">
+<p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: {{accent}}">Short lessons · No jargon required</p>
+<h1 style="margin: 0 0 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(32px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.02em; max-width: 760px">Learn how AI actually works</h1>
+<p style="margin: 0 0 40px; font-size: 18px; line-height: 1.55; color: #5A6072; max-width: 640px">Each lesson is a handful of slides followed by a quick quiz. Pick one to start — they work in any order.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px">
+<sc-for list="{{lessons}}" as="item" hint-placeholder-count="6">
+<sc-if value="{{item.ready}}" hint-placeholder-val="{{ true }}">
+<button class="lesson-card" onClick="{{item.open}}" style="display: flex; flex-direction: column; align-items: stretch; gap: 14px; text-align: left; padding: 24px; border-radius: 16px; border: 1px solid #E2E5EE; background: #FFFFFF; cursor: pointer; font: inherit; color: #161A26; min-height: 220px; box-sizing: border-box">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #5A6072">{{item.n}}</span>
+<span style="{{item.statusStyle}}">{{item.statusLabel}}</span>
+</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; line-height: 1.15">{{item.title}}</div>
+<div style="font-size: 15px; line-height: 1.5; color: #5A6072; flex-grow: 1">{{item.blurb}}</div>
+<div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #5A6072">
+<span>{{item.meta}}</span>
+<span style="font-weight: 600; color: {{accent}}">{{item.cta}} →</span>
+</div>
+</button>
+</sc-if>
+<sc-if value="{{item.draft}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 16px; border: 1.5px dashed #CDD1DC; background: #FAFBFD; min-height: 220px; box-sizing: border-box">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #5A6072">{{item.n}}</span>
+<span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: #EEF0F6; color: #3F4556">Coming soon</span>
+</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; line-height: 1.15; color: #3F4556">{{item.title}}</div>
+<div style="font-size: 15px; line-height: 1.5; color: #5A6072">{{item.blurb}}</div>
+</div>
+</sc-if>
+</sc-for>
+</div>
+</main>
+</sc-if>
+
+<sc-if value="{{isLesson}}" hint-placeholder-val="{{ false }}">
+<main style="max-width: 1120px; margin: 0 auto; padding: 24px 24px 64px; box-sizing: border-box">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px">
+<button onClick="{{goHome}}" style="display: flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0 4px; min-height: 44px; cursor: pointer; font: inherit; font-size: 15px; font-weight: 500; color: #3F4556">← All lessons</button>
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="font-size: 14px; color: #5A6072">{{lesson.title}} · {{slideNum}} of {{slideTotal}}</span>
+<div style="display: flex; gap: 6px" aria-hidden="true">
+<sc-for list="{{dots}}" as="dot" hint-placeholder-count="4"><div style="{{dot.style}}"></div></sc-for>
+</div>
+</div>
+</div>
+
+<section style="display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E2E5EE; box-sizing: border-box; min-height: 440px">
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: {{accent}}">{{lesson.title}}</p>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.015em">{{slide.title}}</h2>
+<sc-for list="{{slide.body}}" as="para" hint-placeholder-count="2">
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #3F4556">{{para}}</p>
+</sc-for>
+</div>
+
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 28px; border-radius: 16px; background: #F0F2F9; box-sizing: border-box">
+
+<sc-if value="{{vis.isTokens}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{vis.chips}}" as="chip" hint-placeholder-count="6">
+<div style="{{chip.style}}"><span>{{chip.text}}</span><sc-if value="{{chip.sub}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #3F4556">{{chip.sub}}</span></sc-if></div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{vis.isTry}}" hint-placeholder-val="{{ false }}">
+<label for="try-input" style="font-size: 14px; font-weight: 600; color: #3F4556">Type a sentence</label>
+<input id="try-input" type="text" value="{{tryText}}" onInput="{{onTry}}" style="font: inherit; font-size: 17px; padding: 12px 14px; border-radius: 10px; border: 1.5px solid #CDD1DC; background: #FFFFFF; color: #161A26; min-height: 48px; box-sizing: border-box; width: 100%">
+<div style="display: flex; flex-wrap: wrap; gap: 6px; min-height: 44px">
+<sc-for list="{{tryChips}}" as="chip" hint-placeholder-count="6"><div style="{{chip.style}}">{{chip.text}}</div></sc-for>
+</div>
+<div style="display: flex; gap: 24px; font-size: 15px">
+<span><strong style="font-family: 'Space Grotesk', sans-serif; font-size: 22px">{{tryTokenCount}}</strong> tokens</span>
+<span><strong style="font-family: 'Space Grotesk', sans-serif; font-size: 22px">{{tryCharCount}}</strong> characters</span>
+</div>
+</sc-if>
+
+<sc-if value="{{vis.isBar}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px; align-items: stretch">
+<sc-for list="{{vis.outside}}" as="seg" hint-placeholder-count="1"><div style="{{seg.style}}">{{seg.label}}</div></sc-for>
+<div style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: {{accent}}">Context window</span>
+<div style="display: flex; gap: 6px; padding: 6px; border-radius: 12px; border: 2px solid {{accent}}; background: #FFFFFF; min-height: 120px">
+<sc-for list="{{vis.inside}}" as="seg" hint-placeholder-count="4"><div style="{{seg.style}}">{{seg.label}}</div></sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{vis.isRows}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{vis.rows}}" as="row" hint-placeholder-count="3">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<span style="width: 92px; font-size: 14px; font-weight: 600; color: #3F4556">{{row.label}}</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{row.chips}}" as="chip" hint-placeholder-count="3"><div style="{{chip.style}}">{{chip.text}}</div></sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{vis.isStack}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{vis.items}}" as="it" hint-placeholder-count="3">
+<div style="{{it.style}}">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #3F4556">{{it.label}}</span>
+<span style="font-size: 16px; line-height: 1.45">{{it.text}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{vis.isCompare}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 12px 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E5EE; font-size: 16px"><strong>Question:</strong> {{vis.question}}</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
+<sc-for list="{{vis.cards}}" as="card" hint-placeholder-count="2">
+<div style="{{card.style}}">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #3F4556">{{card.label}}</span>
+<span style="font-size: 15px; line-height: 1.5">{{card.text}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{vis.isPoints}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{vis.items}}" as="pt" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E5EE">
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px">{{pt.h}}</span>
+<span style="font-size: 15px; line-height: 1.5; color: #5A6072">{{pt.p}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #5A6072">{{vis.caption}}</p>
+</div>
+</section>
+
+<div style="display: flex; justify-content: space-between; gap: 12px; margin-top: 20px">
+<button onClick="{{prevSlide}}" disabled="{{isFirstSlide}}" style="{{prevStyle}}">← Back</button>
+<button onClick="{{nextSlide}}" style="font: inherit; font-size: 16px; font-weight: 600; padding: 0 24px; min-height: 48px; border-radius: 12px; border: 0; background: {{accent}}; color: #FFFFFF; cursor: pointer">{{nextLabel}}</button>
+</div>
+</main>
+</sc-if>
+
+<sc-if value="{{isQuiz}}" hint-placeholder-val="{{ false }}">
+<main style="max-width: 760px; margin: 0 auto; padding: 24px 24px 64px; box-sizing: border-box">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px">
+<button onClick="{{backToSlides}}" style="display: flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0 4px; min-height: 44px; cursor: pointer; font: inherit; font-size: 15px; font-weight: 500; color: #3F4556">← Back to slides</button>
+<span style="font-size: 14px; color: #5A6072">{{lesson.title}} quiz · Question {{qNum}} of {{qTotal}}</span>
+</div>
+<section style="display: flex; flex-direction: column; gap: 20px; padding: 36px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E2E5EE">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 30px); line-height: 1.2">{{question.q}}</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{options}}" as="opt" hint-placeholder-count="4">
+<button class="opt" onClick="{{opt.pick}}" disabled="{{answered}}" style="{{opt.style}}"><span style="{{opt.markerStyle}}">{{opt.letter}}</span><span>{{opt.text}}</span></button>
+</sc-for>
+</div>
+<sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
+<div style="{{fbStyle}}">
+<strong style="font-size: 16px">{{fbTitle}}</strong>
+<span style="font-size: 16px; line-height: 1.55; color: #161A26">{{question.why}}</span>
+</div>
+<div style="display: flex; justify-content: flex-end">
+<button onClick="{{nextQuestion}}" style="font: inherit; font-size: 16px; font-weight: 600; padding: 0 24px; min-height: 48px; border-radius: 12px; border: 0; background: {{accent}}; color: #FFFFFF; cursor: pointer">{{qNextLabel}}</button>
+</div>
+</sc-if>
+</section>
+</main>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+<main style="max-width: 640px; margin: 0 auto; padding: 64px 24px; box-sizing: border-box; text-align: center">
+<section style="display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 48px 32px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E2E5EE">
+<p style="margin: 0; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: {{accent}}">{{lesson.title}} · complete</p>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 72px; line-height: 1">{{score}}<span style="font-size: 36px; color: #5A6072"> / {{qTotal}}</span></div>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #3F4556">{{doneMessage}}</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px">
+<button onClick="{{reviewSlides}}" style="font: inherit; font-size: 16px; font-weight: 600; padding: 0 22px; min-height: 48px; border-radius: 12px; border: 1.5px solid #CDD1DC; background: #FFFFFF; color: #161A26; cursor: pointer">Review slides</button>
+<button onClick="{{goHome}}" style="font: inherit; font-size: 16px; font-weight: 600; padding: 0 22px; min-height: 48px; border-radius: 12px; border: 0; background: {{accent}}; color: #FFFFFF; cursor: pointer">Back to all lessons</button>
+</div>
+</section>
+</main>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#3346D3","options":["#3346D3","#0F7B6C","#B4441E","#6B3FD4"]},"$preview":{"width":1280,"height":900}}'>
+var TINTS = ['#DCE3FF', '#FFE0CC', '#D3F0E2', '#F1DCF6'];
+
+var LESSONS = [
+  {
+    id: 'tokens', n: '01', title: 'Tokenisation', ready: true,
+    blurb: 'How text gets chopped into pieces before a model can read it.',
+    slides: [
+      { title: 'Models don’t read words. They read tokens.',
+        body: ['Before a language model sees your message, a tokeniser splits it into small chunks called tokens.',
+               'A token can be a whole word, part of a word, a word with its leading space, or a single punctuation mark.'],
+        vis: { kind: 'tokens', caption: 'One sentence split into seven tokens. Illustrative split — · marks a space.',
+               chips: [{ t: 'Un' }, { t: 'believ' }, { t: 'ably' }, { t: ',' }, { t: ' the' }, { t: ' tea' }, { t: ' arrived' }] } },
+      { title: 'Every token is really a number',
+        body: ['Each token maps to an ID in the model’s vocabulary — a fixed list of tens or hundreds of thousands of pieces.',
+               'The model only ever works with these numbers. Turning numbers back into text happens at the very end.'],
+        vis: { kind: 'tokens', caption: 'Token IDs shown here are made up for illustration — each model has its own vocabulary.',
+               chips: [{ t: 'Un', s: '1844' }, { t: 'believ', s: '32470' }, { t: 'ably', s: '2061' }, { t: ',', s: '11' }, { t: ' the', s: '279' }, { t: ' tea', s: '15845' }, { t: ' arrived', s: '11721' }] } },
+      { title: 'Try it yourself',
+        body: ['Type anything to get a feel for how text breaks apart.',
+               'Common words usually stay whole. Rare words, names, numbers and typos tend to split into more pieces.'],
+        vis: { kind: 'try', caption: 'Simplified demo. Real tokenisers learn their splits from huge amounts of text, so exact results differ.' } },
+      { title: 'Why tokens matter',
+        body: ['Limits and pricing are counted in tokens, not words. English averages a little under one token per word; many other languages need more.',
+               'Tokens also explain some odd slip-ups: ask a model to count the r’s in “strawberry” and it’s looking at chunks, not letters.'],
+        vis: { kind: 'points', caption: 'Rules of thumb for English text — actual counts vary by model and language.',
+               items: [{ h: '≈ 4 characters', p: 'Typical length of one English token' },
+                       { h: '≈ ¾ of a word', p: 'So 1,000 tokens is roughly 750 words' },
+                       { h: 'More tokens for…', p: 'Code, numbers, names and many non-English languages' }] } }
+    ],
+    quiz: [
+      { q: 'What is a token?', a: 1,
+        o: ['Always exactly one word', 'A chunk of text — a word, part of a word or punctuation', 'A single letter of the alphabet', 'A password the model uses to log in'],
+        why: 'Tokens are chunks of text. Common words are often one token; longer or rarer words get split into several.' },
+      { q: 'Why might a model miscount the r’s in “strawberry”?', a: 0,
+        o: ['It sees chunks of the word, not individual letters', 'It has never seen the word before', 'Counting is switched off by default', 'The word is too long to fit in memory'],
+        why: 'The model receives a few multi-letter tokens rather than ten separate letters, so letter-level tasks are surprisingly hard.' },
+      { q: 'Roughly how many English words fit in 1,000 tokens?', a: 1,
+        o: ['About 100', 'About 750', 'Exactly 1,000', 'About 4,000'],
+        why: 'A common rule of thumb is that a token is about ¾ of an English word, so 1,000 tokens ≈ 750 words.' }
+    ]
+  },
+  {
+    id: 'context', n: '02', title: 'The context window', ready: true,
+    blurb: 'What a model can “see” at once — and why it seems to forget.',
+    slides: [
+      { title: 'The context window is the model’s working memory',
+        body: ['Everything the model can see at once — instructions, your messages, its replies, any pasted documents — has to fit inside one window, measured in tokens.',
+               'Anything outside the window simply doesn’t exist for the model.'],
+        vis: { kind: 'bar', caption: 'Everything in one request shares the same window, including space for the reply.',
+               inside: [{ l: 'Instructions', w: 14, c: 0 }, { l: 'Chat so far', w: 34, c: 1 }, { l: 'Pasted document', w: 30, c: 2 }, { l: 'Room for reply', w: 22, empty: true }] } },
+      { title: 'It doesn’t remember — it rereads',
+        body: ['A model keeps no memory between messages. Each time you send something, the app sends the whole conversation again from the top.',
+               'That’s why long chats get slower and costlier: the window keeps filling up.'],
+        vis: { kind: 'rows', caption: 'Each new message resends everything that came before it.',
+               rows: [{ label: 'Message 1', chips: ['You'] }, { label: 'Message 2', chips: ['You', 'AI', 'You'] }, { label: 'Message 3', chips: ['You', 'AI', 'You', 'AI', 'You'] }] } },
+      { title: 'When it’s full, something has to give',
+        body: ['Windows are large but finite. When a conversation outgrows one, the app has to drop or summarise older parts.',
+               'Details from early on can quietly disappear — the model isn’t ignoring you, it can no longer see them.'],
+        vis: { kind: 'bar', caption: 'In many apps the oldest content is dropped or summarised first.',
+               outside: [{ l: 'Earliest messages', w: 1 }],
+               inside: [{ l: 'Instructions', w: 14, c: 0 }, { l: 'Recent chat', w: 52, c: 1 }, { l: 'Reply', w: 18, empty: true }] } },
+      { title: 'Using context well',
+        body: ['You control what goes into the window, so a little care goes a long way.'],
+        vis: { kind: 'points', caption: 'Good habits for any AI chat tool.',
+               items: [{ h: 'Give it the source', p: 'Paste the document or facts you want used — don’t assume it knows.' },
+                       { h: 'Start fresh for new topics', p: 'A clean window stops old details leaking into new answers.' },
+                       { h: 'Restate what matters', p: 'In long chats, repeat key constraints rather than relying on message one.' }] } }
+    ],
+    quiz: [
+      { q: 'What is the context window?', a: 0,
+        o: ['The text a model can see at once, measured in tokens', 'The size of the chat app on your screen', 'A database of everything you’ve ever typed', 'The data the model was trained on'],
+        why: 'The context window is the model’s working space for a single request — instructions, conversation and documents together.' },
+      { q: 'You start a brand-new chat. What does the model remember from yesterday’s?', a: 2,
+        o: ['Everything, word for word', 'Only the key points', 'Nothing — unless the app adds it to the new context', 'Only your last message'],
+        why: 'The model itself keeps nothing between requests. Some apps offer “memory” features, but they work by adding saved notes into the context.' },
+      { q: 'A long chat seems to forget an instruction you gave at the start. Most likely cause?', a: 1,
+        o: ['The model got bored', 'The instruction was dropped from, or buried in, a crowded window', 'Tokens expire after an hour', 'The model decided to ignore it'],
+        why: 'Early content can be cut or summarised as the window fills, and even when present it can get lost among lots of later text.' }
+    ]
+  },
+  {
+    id: 'persona', n: '03', title: 'Personas & system prompts', ready: true,
+    blurb: 'How instructions shape a model’s voice, focus and boundaries.',
+    slides: [
+      { title: 'One model, many personas',
+        body: ['A persona is a set of instructions — often a hidden “system prompt” — placed at the start of the context.',
+               'It tells the model who to be, how to sound and what to focus on. The underlying model doesn’t change at all.'],
+        vis: { kind: 'stack', caption: 'The system prompt sits in the context window ahead of your message.',
+               items: [{ label: 'System prompt', text: 'You are a friendly tutor for beginners. Keep answers short and use everyday examples.', c: 0 },
+                       { label: 'Your message', text: 'What is a token?', c: 1 },
+                       { label: 'Model reply', text: 'Think of tokens as puzzle pieces of text…', c: 2 }] } },
+      { title: 'Same question, different persona',
+        body: ['Both answers draw on the same underlying knowledge.',
+               'Tone, length and vocabulary change because the instructions changed — nothing else.'],
+        vis: { kind: 'compare', caption: 'Example replies written for illustration.', question: 'What is a token?',
+               cards: [{ label: 'Persona: patient tutor', text: 'Think of tokens as puzzle pieces of text. The model reads the pieces, not whole words.', c: 0 },
+                       { label: 'Persona: technical reviewer', text: 'Tokens are sub-word units produced by the tokeniser and mapped to integer IDs in a fixed vocabulary.', c: 2 }] } },
+      { title: 'What a persona can and can’t do',
+        body: ['Personas are powerful for shaping behaviour, but they’re instructions — not upgrades.'],
+        vis: { kind: 'points', caption: 'A persona steers the model; it doesn’t change what the model knows.',
+               items: [{ h: 'Can: set tone and format', p: 'Friendly or formal, bullets or prose, brief or detailed.' },
+                       { h: 'Can: set focus and limits', p: 'Stay on one topic, or decline certain kinds of request.' },
+                       { h: 'Can’t: add knowledge', p: 'Calling it an “expert” doesn’t give it facts it never learned.' }] } }
+    ],
+    quiz: [
+      { q: 'Where does a persona usually come from?', a: 0,
+        o: ['Instructions such as a system prompt at the start of the context', 'A separate model trained for each persona', 'The user’s profile picture', 'Random chance on each reply'],
+        why: 'Personas are mostly instructions placed in the context. The same model can play many roles.' },
+      { q: 'Telling a model “You are a world-class lawyer” will…', a: 1,
+        o: ['Give it legal knowledge it didn’t have', 'Change its tone and focus, but not what it actually knows', 'Make its advice legally binding', 'Have no effect whatsoever'],
+        why: 'A role can sharpen focus and style, but it can’t add facts the model never learned — so you still need to check its work.' },
+      { q: 'Two apps use the same model but feel very different. Why?', a: 0,
+        o: ['They give it different instructions and context', 'One copy of the model is secretly smarter', 'They use different alphabets', 'One of them is always online'],
+        why: 'Different system prompts, documents and settings in the context make the same model behave very differently.' }
+    ]
+  },
+  { id: 'predict', n: '04', title: 'Predicting the next word', ready: false, blurb: 'How a model writes by guessing one token at a time.' },
+  { id: 'temp', n: '05', title: 'Temperature & randomness', ready: false, blurb: 'Why the same question can get different answers.' },
+  { id: 'halluc', n: '06', title: 'Why AI gets things wrong', ready: false, blurb: 'How a model can sound confident and still be mistaken.' }
+];
+
+var SUFFIXES = ['isation', 'ization', 'ation', 'ably', 'ing', 'ness', 'ment', 'tion', 'ful', 'ly', 'ed', 'er', 's'];
+
+function splitWord(w) {
+  if (w.length <= 6) return [w];
+  var lower = w.toLowerCase();
+  for (var i = 0; i < SUFFIXES.length; i++) {
+    var suf = SUFFIXES[i];
+    if (lower.length - suf.length >= 3 && lower.slice(-suf.length) === suf) {
+      var stem = w.slice(0, w.length - suf.length);
+      return splitWord(stem).concat([w.slice(w.length - suf.length)]);
+    }
+  }
+  var out = [];
+  for (var j = 0; j < w.length; j += 5) out.push(w.slice(j, j + 5));
+  return out;
+}
+
+function roughTokens(text) {
+  var parts = (text || '').match(/\s*[A-Za-z]+|\s*\d|\s*[^\sA-Za-z\d]|\s+$/g) || [];
+  var out = [];
+  parts.forEach(function (p) {
+    var m = p.match(/^(\s*)(.*)$/);
+    var sp = m[1] ? ' ' : '';
+    var w = m[2];
+    if (/^[A-Za-z]+$/.test(w)) {
+      splitWord(w).forEach(function (piece, k) { out.push((k === 0 ? sp : '') + piece); });
+    } else if (w) {
+      out.push(sp + w);
+    }
+  });
+  return out;
+}
+
+function chipStyle(i, big) {
+  return 'display: inline-flex; flex-direction: column; align-items: center; gap: 4px; padding: ' + (big ? '10px 12px' : '6px 10px') +
+    '; border-radius: 8px; background: ' + TINTS[i % 4] + '; font-family: \'JetBrains Mono\', monospace; font-size: ' + (big ? '19px' : '16px') +
+    '; color: #161A26; white-space: pre';
+}
+
+function showSpace(t) { return t.charAt(0) === ' ' ? '·' + t.slice(1) : t; }
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { screen: 'home', lessonId: null, slide: 0, q: 0, picked: null, correct: 0, progress: {},
+                   tryText: 'Unbelievably, tokenisation is surprisingly fun!' };
+  }
+
+  renderVals() {
+    var self = this;
+    var s = this.state;
+    var accent = this.props.accent ?? '#3346D3';
+    var ready = LESSONS.filter(function (l) { return l.ready; });
+    var completedCount = ready.filter(function (l) { return s.progress[l.id] != null; }).length;
+
+    var open = function (id) { self.setState({ screen: 'lesson', lessonId: id, slide: 0, q: 0, picked: null, correct: 0 }); };
+
+    var lessons = LESSONS.map(function (l) {
+      var done = s.progress[l.id];
+      var statusLabel = done != null ? 'Completed · ' + done + '/' + l.quiz.length : 'Not started';
+      var statusStyle = 'font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 99px; ' +
+        (done != null ? 'background: #E3F4EA; color: #1E6B45' : 'background: #EEF0F6; color: #3F4556');
+      return { n: l.n, title: l.title, blurb: l.blurb, ready: l.ready, draft: !l.ready,
+               meta: l.ready ? l.slides.length + ' slides · ' + l.quiz.length + ' questions' : '',
+               cta: done != null ? 'Revisit' : 'Start', statusLabel: statusLabel, statusStyle: statusStyle,
+               open: function () { open(l.id); } };
+    });
+
+    var lesson = LESSONS.find(function (l) { return l.id === s.lessonId; }) || ready[0];
+    var slides = lesson.slides;
+    var slide = slides[Math.min(s.slide, slides.length - 1)];
+    var v = slide.vis;
+
+    var vis = { caption: v.caption, isTokens: v.kind === 'tokens', isTry: v.kind === 'try', isBar: v.kind === 'bar',
+                isRows: v.kind === 'rows', isStack: v.kind === 'stack', isCompare: v.kind === 'compare', isPoints: v.kind === 'points',
+                chips: [], outside: [], inside: [], rows: [], items: [], cards: [], question: v.question || '' };
+    if (v.chips) vis.chips = v.chips.map(function (c, i) { return { text: showSpace(c.t), sub: c.s || '', style: chipStyle(i, true) }; });
+    var segStyle = function (sg) {
+      var base = 'flex: ' + sg.w + ' 1 0; min-width: 0; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 500; line-height: 1.3; display: flex; align-items: flex-end; overflow-wrap: anywhere; ';
+      if (sg.empty) return base + 'background: #FFFFFF; border: 1.5px dashed #8A90A2; color: #3F4556';
+      return base + 'background: ' + TINTS[sg.c] + '; color: #161A26';
+    };
+    if (v.inside) vis.inside = v.inside.map(function (sg) { return { label: sg.l, style: segStyle(sg) }; });
+    if (v.outside) vis.outside = v.outside.map(function (sg) {
+      return { label: sg.l, style: 'flex: 0 0 22%; margin-top: 24px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 500; line-height: 1.3; display: flex; align-items: flex-end; background: #E6E8EE; border: 1.5px dashed #8A90A2; color: #3F4556; text-decoration: line-through' };
+    });
+    if (v.rows) vis.rows = v.rows.map(function (r) {
+      return { label: r.label, chips: r.chips.map(function (c) {
+        return { text: c, style: 'padding: 6px 12px; border-radius: 99px; font-size: 14px; font-weight: 600; color: #161A26; background: ' + (c === 'You' ? TINTS[0] : TINTS[2]) };
+      }) };
+    });
+    var cardStyle = function (c) { return 'display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 12px; background: #FFFFFF; border-top: 4px solid ' + ['#8C98F0', '#F0A46E', '#6CC59B'][c] + '; box-shadow: 0 1px 0 #E2E5EE'; };
+    if (v.kind === 'stack') vis.items = v.items.map(function (it) { return { label: it.label, text: it.text, style: cardStyle(it.c) }; });
+    if (v.kind === 'points') vis.items = v.items;
+    if (v.cards) vis.cards = v.cards.map(function (c) { return { label: c.label, text: c.text, style: cardStyle(c.c) }; });
+
+    var toks = roughTokens(s.tryText);
+    var tryChips = toks.map(function (t, i) { return { text: showSpace(t), style: chipStyle(i, false) }; });
+
+    var dots = slides.map(function (_, i) {
+      return { style: 'width: ' + (i === s.slide ? '22px' : '8px') + '; height: 8px; border-radius: 99px; background: ' + (i <= s.slide ? accent : '#CDD1DC') };
+    });
+
+    var isFirstSlide = s.slide === 0;
+    var isLastSlide = s.slide >= slides.length - 1;
+
+    var quiz = lesson.quiz || [];
+    var question = quiz[Math.min(s.q, quiz.length - 1)] || { q: '', o: [], a: 0, why: '' };
+    var answered = s.picked != null;
+    var letters = ['A', 'B', 'C', 'D'];
+    var options = question.o.map(function (text, i) {
+      var isRight = i === question.a, isPicked = i === s.picked;
+      var border = '#E2E5EE', bg = '#FFFFFF', mBg = '#EEF0F6', mFg = '#3F4556', op = '1';
+      if (answered && isRight) { border = '#1E7B4F'; bg = '#E3F4EA'; mBg = '#1E7B4F'; mFg = '#FFFFFF'; }
+      else if (answered && isPicked) { border = '#B42318'; bg = '#FDE7E4'; mBg = '#B42318'; mFg = '#FFFFFF'; }
+      else if (answered) { op = '.6'; }
+      return {
+        text: text, letter: letters[i],
+        style: 'display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 12px 16px; border-radius: 12px; border: 1.5px solid ' + border +
+               '; background: ' + bg + '; font: inherit; font-size: 16px; line-height: 1.4; color: #161A26; min-height: 56px; box-sizing: border-box; opacity: ' + op + '; cursor: ' + (answered ? 'default' : 'pointer'),
+        markerStyle: 'flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; background: ' + mBg + '; color: ' + mFg,
+        pick: function () {
+          if (self.state.picked != null) return;
+          self.setState({ picked: i, correct: self.state.correct + (i === question.a ? 1 : 0) });
+        }
+      };
+    });
+    var gotIt = answered && s.picked === question.a;
+
+    var score = s.correct;
+    var doneMessage = score === quiz.length ? 'Perfect score — you’ve got this one.'
+      : score >= quiz.length - 1 ? 'Nearly there. A quick look back at the slides will lock it in.'
+      : 'Worth another pass through the slides — then try the quiz again.';
+
+    var fill = ready.length ? Math.round(completedCount / ready.length * 100) : 0;
+
+    return {
+      accent: accent,
+      isHome: s.screen === 'home', isLesson: s.screen === 'lesson', isQuiz: s.screen === 'quiz', isDone: s.screen === 'done',
+      lessons: lessons, completedCount: completedCount, readyCount: ready.length,
+      progressFill: 'height: 100%; width: ' + fill + '%; background: ' + accent + '; border-radius: 99px',
+      lesson: lesson, slide: slide, vis: vis, dots: dots,
+      slideNum: s.slide + 1, slideTotal: slides.length,
+      isFirstSlide: isFirstSlide,
+      prevStyle: 'font: inherit; font-size: 16px; font-weight: 600; padding: 0 22px; min-height: 48px; border-radius: 12px; border: 1.5px solid #CDD1DC; background: #FFFFFF; color: #161A26; cursor: pointer; ' + (isFirstSlide ? 'visibility: hidden' : ''),
+      nextLabel: isLastSlide ? 'Start the quiz →' : 'Next →',
+      tryText: s.tryText, tryChips: tryChips, tryTokenCount: toks.length, tryCharCount: (s.tryText || '').length,
+      onTry: function (e) { self.setState({ tryText: e.target.value }); },
+      question: question, options: options, answered: answered,
+      qNum: s.q + 1, qTotal: quiz.length,
+      fbTitle: gotIt ? 'Correct' : 'Not quite',
+      fbStyle: 'display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 12px; background: ' + (gotIt ? '#E3F4EA' : '#FDE7E4') + '; color: ' + (gotIt ? '#1E6B45' : '#9B1C12'),
+      qNextLabel: s.q >= quiz.length - 1 ? 'See my score →' : 'Next question →',
+      score: score, doneMessage: doneMessage,
+      goHome: function () { self.setState({ screen: 'home' }); },
+      prevSlide: function () { if (self.state.slide > 0) self.setState({ slide: self.state.slide - 1 }); },
+      nextSlide: function () {
+        if (self.state.slide < slides.length - 1) self.setState({ slide: self.state.slide + 1 });
+        else self.setState({ screen: 'quiz', q: 0, picked: null, correct: 0 });
+      },
+      backToSlides: function () { self.setState({ screen: 'lesson', slide: slides.length - 1, q: 0, picked: null, correct: 0 }); },
+      nextQuestion: function () {
+        if (self.state.q < quiz.length - 1) { self.setState({ q: self.state.q + 1, picked: null }); return; }
+        var prog = Object.assign({}, self.state.progress);
+        prog[lesson.id] = Math.max(prog[lesson.id] || 0, self.state.correct);
+        self.setState({ screen: 'done', progress: prog });
+      },
+      reviewSlides: function () { self.setState({ screen: 'lesson', slide: 0, q: 0, picked: null, correct: 0 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "tokens",
+  "number": "01",
+  "title": "Tokenisation",
+  "blurb": "How text gets chopped into pieces before a model can read it.",
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Models don’t read words. They read tokens.",
+      "body": [
+        "Before a language model sees your message, a tokeniser splits it into small chunks called tokens.",
+        "A token can be a whole word, part of a word, a word with its leading space, or a single punctuation mark."
+      ],
+      "visual": {
+        "kind": "tokens",
+        "caption": "One sentence split into seven tokens. Illustrative split — · marks a space.",
+        "tokens": [
+          { "text": "Un" },
+          { "text": "believ" },
+          { "text": "ably" },
+          { "text": "," },
+          { "text": " the" },
+          { "text": " tea" },
+          { "text": " arrived" }
+        ]
+      }
+    },
+    {
+      "title": "Every token is really a number",
+      "body": [
+        "Each token maps to an ID in the model’s vocabulary — a fixed list of tens or hundreds of thousands of pieces.",
+        "The model only ever works with these numbers. Turning numbers back into text happens at the very end."
+      ],
+      "visual": {
+        "kind": "tokens",
+        "caption": "Token IDs shown here are made up for illustration — each model has its own vocabulary.",
+        "tokens": [
+          { "text": "Un", "tokenId": "1844" },
+          { "text": "believ", "tokenId": "32470" },
+          { "text": "ably", "tokenId": "2061" },
+          { "text": ",", "tokenId": "11" },
+          { "text": " the", "tokenId": "279" },
+          { "text": " tea", "tokenId": "15845" },
+          { "text": " arrived", "tokenId": "11721" }
+        ]
+      }
+    },
+    {
+      "title": "Try it yourself",
+      "body": [
+        "Type anything to get a feel for how text breaks apart.",
+        "Common words usually stay whole. Rare words, names, numbers and typos tend to split into more pieces."
+      ],
+      "visual": {
+        "kind": "try-it",
+        "caption": "Simplified demo. Real tokenisers learn their splits from huge amounts of text, so exact results differ.",
+        "initialText": "Unbelievably, tokenisation is surprisingly fun!"
+      }
+    },
+    {
+      "title": "Why tokens matter",
+      "body": [
+        "Limits and pricing are counted in tokens, not words. English averages a little under one token per word; many other languages need more.",
+        "Tokens also explain some odd slip-ups: ask a model to count the r’s in “strawberry” and it’s looking at chunks, not letters."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Rules of thumb for English text — actual counts vary by model and language.",
+        "items": [
+          { "heading": "≈ 4 characters", "text": "Typical length of one English token" },
+          { "heading": "≈ ¾ of a word", "text": "So 1,000 tokens is roughly 750 words" },
+          { "heading": "More tokens for…", "text": "Code, numbers, names and many non-English languages" }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What is a token?",
+      "options": [
+        "Always exactly one word",
+        "A chunk of text — a word, part of a word or punctuation",
+        "A single letter of the alphabet",
+        "A password the model uses to log in"
+      ],
+      "answer": 1,
+      "explanation": "Tokens are chunks of text. Common words are often one token; longer or rarer words get split into several."
+    },
+    {
+      "question": "Why might a model miscount the r’s in “strawberry”?",
+      "options": [
+        "It sees chunks of the word, not individual letters",
+        "It has never seen the word before",
+        "Counting is switched off by default",
+        "The word is too long to fit in memory"
+      ],
+      "answer": 0,
+      "explanation": "The model receives a few multi-letter tokens rather than ten separate letters, so letter-level tasks are surprisingly hard."
+    },
+    {
+      "question": "Roughly how many English words fit in 1,000 tokens?",
+      "options": ["About 100", "About 750", "Exactly 1,000", "About 4,000"],
+      "answer": 1,
+      "explanation": "A common rule of thumb is that a token is about ¾ of an English word, so 1,000 tokens ≈ 750 words."
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "temperature",
+  "number": "05",
+  "title": "Temperature & randomness",
+  "blurb": "Why the same question can get different answers.",
+  "status": "ready",
+  "slides": [
+    {
+      "title": "Same question, different answers",
+      "body": [
+        "Ask a chatbot the same thing twice and you’ll often get two different replies.",
+        "That’s deliberate. At each step the next token is picked with a little randomness, and one different pick early on can send the rest of the reply somewhere new."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Example replies written for illustration.",
+        "question": "Suggest a name for my cat.",
+        "cards": [
+          { "label": "First try", "text": "How about Pepper? It’s short, friendly and easy to call.", "accent": "blue" },
+          { "label": "Second try", "text": "You could go with Biscuit — warm, playful and a bit cheeky.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "The pick is weighted, not a coin toss",
+      "body": [
+        "Remember the scores from the last lesson? The next token is chosen at random, but in proportion to those scores.",
+        "High-scoring tokens win most of the time. Low-scoring ones win occasionally. Very unlikely ones almost never do."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Probabilities made up for illustration, continuing “The cat sat on the…”.",
+        "items": [
+          { "heading": "“mat” · 41%", "text": "Picked most often" },
+          { "heading": "“floor” · 18%", "text": "Picked now and then" },
+          { "heading": "“moon” · 0.1%", "text": "Almost never picked" }
+        ]
+      }
+    },
+    {
+      "title": "Temperature sets how adventurous the picks are",
+      "body": [
+        "Temperature is a setting that reshapes those scores before the pick. Low temperature favours the top choices even more, so replies are focused and consistent.",
+        "High temperature evens the scores out, so less likely tokens get picked more often. Replies become more varied and creative — and more likely to wander off track."
+      ],
+      "visual": {
+        "kind": "compare",
+        "caption": "Example replies written for illustration.",
+        "question": "Describe the sea in one sentence.",
+        "cards": [
+          { "label": "Low temperature", "text": "The sea is a large body of salt water that covers most of the Earth.", "accent": "blue" },
+          { "label": "High temperature", "text": "The sea hums silver lullabies to restless gulls.", "accent": "orange" }
+        ]
+      }
+    },
+    {
+      "title": "Choosing a setting",
+      "body": [
+        "Many chat apps choose the temperature for you. Tools for developers usually let you set it.",
+        "Either way, it helps to know what it does — and what it doesn’t."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "General guidance — the best setting depends on the model and the task.",
+        "items": [
+          { "heading": "Lower for precision", "text": "Summaries, data extraction and code benefit from consistent output." },
+          { "heading": "Higher for ideas", "text": "Brainstorming and creative writing benefit from variety." },
+          { "heading": "Not a truth dial", "text": "Low temperature makes answers more consistent, not more correct." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Why can the same question get different answers?",
+      "options": [
+        "The model learns from each conversation and changes its mind",
+        "Each next token is picked with some randomness, weighted by its score",
+        "The model forgets the question halfway through",
+        "Different answers come from different servers"
+      ],
+      "answer": 1,
+      "explanation": "Tokens are sampled from the model’s probabilities, so different picks — especially early ones — lead to different replies."
+    },
+    {
+      "question": "What happens when you lower the temperature?",
+      "options": [
+        "Replies become more focused and consistent",
+        "Replies become more creative and surprising",
+        "The model runs faster",
+        "The model gains new knowledge"
+      ],
+      "answer": 0,
+      "explanation": "Lower temperature favours the highest-scoring tokens, so output varies less from run to run."
+    },
+    {
+      "question": "You set the temperature as low as it goes. What does that guarantee?",
+      "options": [
+        "Every answer will be correct",
+        "The model will refuse to guess",
+        "Nothing about accuracy — answers become more consistent, not more correct",
+        "The model will show its sources"
+      ],
+      "answer": 2,
+      "explanation": "Temperature controls variety, not truth. A low-temperature answer can be consistently wrong."
+    }
+  ]
+}

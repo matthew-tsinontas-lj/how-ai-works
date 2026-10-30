@@ -1,0 +1,15 @@
+.blue {
+  background: var(--tint-blue);
+}
+
+.peach {
+  background: var(--tint-peach);
+}
+
+.mint {
+  background: var(--tint-mint);
+}
+
+.lilac {
+  background: var(--tint-lilac);
+}

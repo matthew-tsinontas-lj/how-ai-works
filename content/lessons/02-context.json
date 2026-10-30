@@ -1,0 +1,108 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "context",
+  "number": "02",
+  "title": "The context window",
+  "blurb": "What a model can “see” at once — and why it seems to forget.",
+  "status": "ready",
+  "slides": [
+    {
+      "title": "The context window is the model’s working memory",
+      "body": [
+        "Everything the model can see at once — instructions, your messages, its replies, any pasted documents — has to fit inside one window, measured in tokens.",
+        "Anything outside the window simply doesn’t exist for the model."
+      ],
+      "visual": {
+        "kind": "context-bar",
+        "caption": "Everything in one request shares the same window, including space for the reply.",
+        "inside": [
+          { "label": "Instructions", "size": 14, "fill": "blue" },
+          { "label": "Chat so far", "size": 34, "fill": "peach" },
+          { "label": "Pasted document", "size": 30, "fill": "mint" },
+          { "label": "Room for reply", "size": 22, "fill": "empty" }
+        ]
+      }
+    },
+    {
+      "title": "It doesn’t remember — it rereads",
+      "body": [
+        "A model keeps no memory between messages. Each time you send something, the app sends the whole conversation again from the top.",
+        "That’s why long chats get slower and costlier: the window keeps filling up."
+      ],
+      "visual": {
+        "kind": "rows",
+        "caption": "Each new message resends everything that came before it.",
+        "rows": [
+          { "label": "Message 1", "chips": ["You"] },
+          { "label": "Message 2", "chips": ["You", "AI", "You"] },
+          { "label": "Message 3", "chips": ["You", "AI", "You", "AI", "You"] }
+        ]
+      }
+    },
+    {
+      "title": "When it’s full, something has to give",
+      "body": [
+        "Windows are large but finite. When a conversation outgrows one, the app has to drop or summarise older parts.",
+        "Details from early on can quietly disappear — the model isn’t ignoring you, it can no longer see them."
+      ],
+      "visual": {
+        "kind": "context-bar",
+        "caption": "In many apps the oldest content is dropped or summarised first.",
+        "outside": [{ "label": "Earliest messages" }],
+        "inside": [
+          { "label": "Instructions", "size": 14, "fill": "blue" },
+          { "label": "Recent chat", "size": 52, "fill": "peach" },
+          { "label": "Reply", "size": 18, "fill": "empty" }
+        ]
+      }
+    },
+    {
+      "title": "Using context well",
+      "body": ["You control what goes into the window, so a little care goes a long way."],
+      "visual": {
+        "kind": "points",
+        "caption": "Good habits for any AI chat tool.",
+        "items": [
+          { "heading": "Give it the source", "text": "Paste the document or facts you want used — don’t assume it knows." },
+          { "heading": "Start fresh for new topics", "text": "A clean window stops old details leaking into new answers." },
+          { "heading": "Restate what matters", "text": "In long chats, repeat key constraints rather than relying on message one." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What is the context window?",
+      "options": [
+        "The text a model can see at once, measured in tokens",
+        "The size of the chat app on your screen",
+        "A database of everything you’ve ever typed",
+        "The data the model was trained on"
+      ],
+      "answer": 0,
+      "explanation": "The context window is the model’s working space for a single request — instructions, conversation and documents together."
+    },
+    {
+      "question": "You start a brand-new chat. What does the model remember from yesterday’s?",
+      "options": [
+        "Everything, word for word",
+        "Only the key points",
+        "Nothing — unless the app adds it to the new context",
+        "Only your last message"
+      ],
+      "answer": 2,
+      "explanation": "The model itself keeps nothing between requests. Some apps offer “memory” features, but they work by adding saved notes into the context."
+    },
+    {
+      "question": "A long chat seems to forget an instruction you gave at the start. Most likely cause?",
+      "options": [
+        "The model got bored",
+        "The instruction was dropped from, or buried in, a crowded window",
+        "Tokens expire after an hour",
+        "The model decided to ignore it"
+      ],
+      "answer": 1,
+      "explanation": "Early content can be cut or summarised as the window fills, and even when present it can get lost among lots of later text."
+    }
+  ]
+}

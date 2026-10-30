@@ -1,0 +1,110 @@
+{
+  "$schema": "../lesson.schema.json",
+  "id": "predict",
+  "number": "04",
+  "title": "Predicting the next word",
+  "blurb": "How a model writes by guessing one token at a time.",
+  "status": "ready",
+  "slides": [
+    {
+      "title": "A language model predicts what comes next",
+      "body": [
+        "At its core, a language model does one job: given the text so far, predict the next token.",
+        "It adds that token to the text, then predicts again. Everything it writes — answers, emails, code — comes from repeating that one step."
+      ],
+      "visual": {
+        "kind": "stack",
+        "caption": "One step of generation. The loop runs until the reply is finished.",
+        "items": [
+          { "label": "Text so far", "text": "The cat sat on the", "accent": "blue" },
+          { "label": "Model predicts", "text": "Most likely next token: “ mat”", "accent": "orange" },
+          { "label": "Add it and repeat", "text": "“The cat sat on the mat” becomes the new input.", "accent": "green" }
+        ]
+      }
+    },
+    {
+      "title": "Every possible token gets a score",
+      "body": [
+        "The model doesn’t produce one answer. It gives a probability to every token in its vocabulary — likely ones get high scores, odd ones get tiny ones.",
+        "Those scores come from patterns in the huge amount of text it was trained on."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Probabilities made up for illustration. Real models score tens of thousands of tokens at every step.",
+        "items": [
+          { "heading": "“mat” · 41%", "text": "A very common way to finish this sentence" },
+          { "heading": "“floor” · 18%", "text": "Also plausible, just less common" },
+          { "heading": "“moon” · 0.1%", "text": "Possible, but the model rates it very unlikely" }
+        ]
+      }
+    },
+    {
+      "title": "One token at a time, start to finish",
+      "body": [
+        "A reply is built step by step, with each new token added before the next one is predicted. That’s why chat replies often appear a word or so at a time.",
+        "The model doesn’t plan a whole answer and then type it out. Once a token is written, everything after it builds on it — including any mistakes."
+      ],
+      "visual": {
+        "kind": "rows",
+        "caption": "Each step feeds everything written so far back in as input.",
+        "rows": [
+          { "label": "Step 1", "chips": ["Once"] },
+          { "label": "Step 2", "chips": ["Once", "upon"] },
+          { "label": "Step 3", "chips": ["Once", "upon", "a"] },
+          { "label": "Step 4", "chips": ["Once", "upon", "a", "time"] }
+        ]
+      }
+    },
+    {
+      "title": "Predicting isn’t the same as knowing",
+      "body": [
+        "Because the model writes whatever is most likely to come next, it’s very good at sounding fluent and natural.",
+        "But “likely to come next” and “true” aren’t the same thing — which is why later lessons matter."
+      ],
+      "visual": {
+        "kind": "points",
+        "caption": "Next-token prediction explains both the strengths and the slip-ups.",
+        "items": [
+          { "heading": "Fluent by design", "text": "It has learned how sentences usually flow, in many styles and languages." },
+          { "heading": "No built-in fact check", "text": "Nothing in the prediction step looks up whether a statement is true." },
+          { "heading": "Shaped by training", "text": "Further training teaches it to act like a helpful assistant, but it still writes by prediction." }
+        ]
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What does a language model do at each step of writing a reply?",
+      "options": [
+        "Predicts the next token from the text so far",
+        "Looks up the full answer in a database",
+        "Copies a sentence it memorised word for word",
+        "Picks a word completely at random"
+      ],
+      "answer": 0,
+      "explanation": "Each step predicts one next token from everything written so far. Repeating that step builds the whole reply."
+    },
+    {
+      "question": "Why do chatbot replies often appear a little at a time?",
+      "options": [
+        "The internet connection is slow",
+        "The model is generated one token at a time, and each is shown as it’s produced",
+        "The app adds a typing delay to seem human",
+        "The model writes the reply backwards"
+      ],
+      "answer": 1,
+      "explanation": "Replies are produced token by token, so many apps show each piece as soon as it’s ready."
+    },
+    {
+      "question": "Given “The capital of France is”, why does a model give “ Paris” a high probability?",
+      "options": [
+        "It searches the web before answering",
+        "“Paris” is the only token in its vocabulary",
+        "That pattern appeared often in the text it was trained on",
+        "It was hard-coded by a programmer"
+      ],
+      "answer": 2,
+      "explanation": "The probabilities reflect patterns learned during training. Common, well-documented facts tend to get high scores — less common ones may not."
+    }
+  ]
+}
